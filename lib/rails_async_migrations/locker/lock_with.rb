@@ -9,7 +9,7 @@ module RailsAsyncMigrations
       end
 
       def perform
-        return false if unlocked?
+        return false if lockable?
 
         suspend_lock do
           instance.define_method(name, overwrite)
@@ -38,9 +38,8 @@ module RailsAsyncMigrations
         unlocked? && allowed_method?
       end
 
-      # TODO: put into config
       def allowed_method?
-        [:change].include? name
+        RailsAsyncMigrations.config.locked_methods.include? name
       end
 
       def lock
