@@ -1,6 +1,5 @@
 source "https://rubygems.org"
 
-git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
-
-# Specify your gem's dependencies in rails_async_migrations.gemspec
 gemspec
+
+gem "activerecord", "~> 5.2.0"

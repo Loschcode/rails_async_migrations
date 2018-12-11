@@ -1,0 +1,2 @@
+class AsyncSchemaMigration < ApplicationRecord
+end
