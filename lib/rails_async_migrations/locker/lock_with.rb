@@ -1,6 +1,8 @@
 module RailsAsyncMigrations
   module Locker
     class LockWith
+      attr_reader :instance, :name
+
       def initialize(instance, name)
         @instance = instance
         @name = name
@@ -55,14 +57,6 @@ module RailsAsyncMigrations
 
       def locked
         instance.instance_variable_get(:@locked)
-      end
-
-      def name
-        @name
-      end
-
-      def instance
-        @instance
       end
     end
   end
