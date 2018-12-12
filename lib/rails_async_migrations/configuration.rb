@@ -2,10 +2,11 @@
 # default values set here
 module RailsAsyncMigrations
   class Configuration
-    attr_accessor :locked_methods
+    attr_accessor :locked_methods, :mode
 
     def initialize
       @locked_methods = [:change, :up, :down]
+      @mode = :verbose # [:verbose, :quiet]
     end
   end
 end

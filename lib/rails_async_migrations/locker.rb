@@ -1,4 +1,5 @@
-require 'rails_async_migrations/locker/lock_with'
+require 'rails_async_migrations/locker/lock'
+require 'rails_async_migrations/locker/overwrite'
 
 module RailsAsyncMigrations
   module Locker
@@ -8,13 +9,13 @@ module RailsAsyncMigrations
 
     module ClassMethods
       def method_added(name)
-        lock_with self, name
+        lock self, name
       end
 
       private
 
-      def lock_with(*args)
-        LockWith.new(*args).perform
+      def lock(*args)
+        Lock.new(*args).perform
       end
     end
   end
