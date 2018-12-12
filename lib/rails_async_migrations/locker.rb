@@ -1,6 +1,8 @@
 require 'rails_async_migrations/locker/lock'
 require 'rails_async_migrations/locker/overwrite'
 
+# when included this class is the gateway
+# to the method locking system
 module RailsAsyncMigrations
   module Locker
     def self.included(base)

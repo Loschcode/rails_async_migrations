@@ -12,17 +12,17 @@ module RailsAsyncMigrations
       end
 
       def perform
-        tracer.notice("#{instance.class}\##{method_name} was called in locked state")
+        tracer.verbose("#{instance.class}\##{method_name} was called in locked state")
       end
 
       private
 
-      def tracer
-        @tracer ||= Tracer.new(mode)
-      end
-
       def mode
         RailsAsyncMigrations.config.mode
+      end
+
+      def tracer
+        @tracer ||= Tracer.new(mode)
       end
     end
   end

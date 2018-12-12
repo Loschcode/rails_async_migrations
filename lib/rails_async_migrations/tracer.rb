@@ -8,10 +8,16 @@ module RailsAsyncMigrations
       @mode = mode
     end
 
-    def notice(text)
-      if mode == :verbose
-        puts text
-      end
+    def verbose(text)
+      return unless verbose?
+
+      puts text
+    end
+
+    private
+
+    def verbose?
+      mode == :verbose
     end
   end
 end
