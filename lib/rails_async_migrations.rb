@@ -2,19 +2,12 @@ require 'active_support'
 require 'rails_async_migrations/configuration'
 require 'rails_async_migrations/locker'
 require 'rails_async_migrations/migration'
+require 'rails_async_migrations/tracer'
 require 'rails_async_migrations/version'
 # require 'rails_async_migrations/models/async_schema_migration'
 
 module RailsAsyncMigrations
   class Error < StandardError; end
-  # Your code goes here...
-end
-
-ActiveSupport.on_load(:active_record) do
-  ActiveRecord::Migration.prepend(RailsAsyncMigrations::Migration)
-end
-
-module RailsAsyncMigrations
   # METHODS_MAP = [:async]
 
   class << self
@@ -34,10 +27,14 @@ module RailsAsyncMigrations
       end
     end
 
-    alias_method :config, :configuration
+    alias config configuration
 
     def reset
       @configuration = Configuration.new
     end
   end
+end
+
+ActiveSupport.on_load(:active_record) do
+  ActiveRecord::Migration.prepend(RailsAsyncMigrations::Migration)
 end

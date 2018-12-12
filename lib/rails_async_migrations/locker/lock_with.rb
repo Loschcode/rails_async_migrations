@@ -1,18 +1,20 @@
 module RailsAsyncMigrations
   module Locker
     class LockWith
-      attr_reader :instance, :name
+      attr_reader :resource_class, :name
 
-      def initialize(instance, name)
-        @instance = instance
+      def initialize(resource_class, name)
+        @resource_class = resource_class
         @name = name
       end
 
       def perform
-        return false if lockable?
+        return false unless locked_method?
+        return false if unlocked?
 
+        # run the overwrite
         suspend_lock do
-          instance.define_method(name, overwrite)
+          resource_class.define_method(name, overwrite)
         end
       end
 
@@ -35,10 +37,10 @@ module RailsAsyncMigrations
       end
 
       def lockable?
-        unlocked? && allowed_method?
+        unlocked? && locked_method?
       end
 
-      def allowed_method?
+      def locked_method?
         RailsAsyncMigrations.config.locked_methods.include? name
       end
 
@@ -51,11 +53,11 @@ module RailsAsyncMigrations
       end
 
       def locked=(value)
-        instance.instance_variable_set(:@locked, value)
+        resource_class.instance_variable_set(:@locked, value)
       end
 
       def locked
-        instance.instance_variable_get(:@locked)
+        resource_class.instance_variable_get(:@locked)
       end
     end
   end

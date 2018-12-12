@@ -1,4 +1,4 @@
-require_dependency 'rails_async_migrations/locker/lock_with'
+require 'rails_async_migrations/locker/lock_with'
 
 module RailsAsyncMigrations
   module Locker
@@ -10,10 +10,6 @@ module RailsAsyncMigrations
       def method_added(name)
         lock_with self, name
       end
-
-      # def singleton_method_added(name)
-      #   lock_with(self, name).perform
-      # end
 
       private
 
