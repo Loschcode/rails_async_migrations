@@ -5,8 +5,8 @@ module RailsAsyncMigrations
     attr_accessor :locked_methods, :mode
 
     def initialize
-      @locked_methods = [:change, :up, :down]
-      @mode = :verbose # [:verbose, :quiet]
+      @locked_methods = %i[change up down]
+      @mode = :verbose # %i[verbose quiet]
     end
   end
 end

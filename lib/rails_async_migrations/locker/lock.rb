@@ -28,7 +28,7 @@ module RailsAsyncMigrations
 
       def overwrite
         proc do
-          Overwrite.new(self).perform
+          Overwrite.new(self, __method__).perform
         end
       end
 

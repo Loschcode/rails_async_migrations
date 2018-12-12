@@ -4,14 +4,15 @@
 module RailsAsyncMigrations
   module Locker
     class Overwrite
-      attr_reader :instance
+      attr_reader :instance, :method_name
 
-      def initialize(instance)
+      def initialize(instance, method_name)
         @instance = instance
+        @method_name = method_name
       end
 
       def perform
-        tracer.notice('was overwritten')
+        tracer.notice("#{instance.class}\##{method_name} was called in locked state")
       end
 
       private
