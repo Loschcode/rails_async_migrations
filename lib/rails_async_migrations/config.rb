@@ -1,7 +1,7 @@
 # configuration of the gem and
 # default values set here
 module RailsAsyncMigrations
-  class Configuration
+  class Config
     attr_accessor :locked_methods, :mode
 
     def initialize

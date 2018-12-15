@@ -1,10 +1,10 @@
 require 'active_support'
-require 'rails_async_migrations/configuration'
-require 'rails_async_migrations/locker'
+require 'rails_async_migrations/config'
 require 'rails_async_migrations/migration'
+require 'rails_async_migrations/mutators'
 require 'rails_async_migrations/tracer'
 require 'rails_async_migrations/version'
-# require 'rails_async_migrations/models/async_schema_migration'
+require 'rails_async_migrations/models/async_schema_migration'
 
 module RailsAsyncMigrations
   class Error < StandardError; end
@@ -18,23 +18,21 @@ module RailsAsyncMigrations
     #     Request.const_get(method.capitalize).new(*args)
     #   end
 
-    def configuration
-      @configuration ||= Configuration.new
+    def config
+      @config ||= Config.new
       if block_given?
-        yield @configuration
+        yield @config
       else
-        @configuration
+        @config
       end
     end
 
-    alias config configuration
-
     def reset
-      @configuration = Configuration.new
+      @config = Config.new
     end
   end
 end
 
 ActiveSupport.on_load(:active_record) do
-  ActiveRecord::Migration.prepend(RailsAsyncMigrations::Migration)
+  ActiveRecord::Migration.prepend RailsAsyncMigrations::Mutators
 end

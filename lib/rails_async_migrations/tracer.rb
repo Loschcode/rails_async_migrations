@@ -1,11 +1,9 @@
 # log things and dispatch them wherever
 # depending on the context mode
+# TODO : to fully test
 module RailsAsyncMigrations
   class Tracer
-    attr_reader :mode
-
-    def initialize(mode)
-      @mode = mode
+    def initialize
     end
 
     def verbose(text)
@@ -18,6 +16,10 @@ module RailsAsyncMigrations
 
     def verbose?
       mode == :verbose
+    end
+
+    def mode
+      RailsAsyncMigrations.config.mode
     end
   end
 end

@@ -2,13 +2,14 @@
 # this allow us to ignore migration without making
 # a parallel pipeline system
 module RailsAsyncMigrations
-  module Locker
+  module Migration
     class Lock
-      attr_reader :resource_class, :method_name
+      attr_reader :resource_class, :method_name, :overwrite_with
 
-      def initialize(resource_class, method_name)
+      def initialize(resource_class, method_name, overwrite_with: nil)
         @resource_class = resource_class
         @method_name = method_name
+        @overwrite_with = overwrite_with
       end
 
       def perform
@@ -16,7 +17,7 @@ module RailsAsyncMigrations
         return false if unlocked?
 
         suspend_lock do
-          resource_class.define_method(method_name, overwrite)
+          resource_class.define_method(method_name, &overwrite_with) if overwrite_with
         end
       end
 
@@ -25,12 +26,6 @@ module RailsAsyncMigrations
       end
 
       private
-
-      def overwrite
-        proc do
-          Overwrite.new(self, __method__).perform
-        end
-      end
 
       def suspend_lock(&block)
         unlock
