@@ -1,15 +1,6 @@
 module RailsAsyncMigrations
   module Mutators
     class Base
-      def direction
-        instance.reversible do |direction|
-          direction.up { @direction = :up }
-          direction.down { @direction = :down }
-        end
-
-        @direction
-      end
-
       #  Migrator.new(:up, selected_migrations, target_version).migrate
       # TODO : check migration_context.current_version
       def current_migration

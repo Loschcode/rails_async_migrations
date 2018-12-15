@@ -1,11 +1,11 @@
 module RailsAsyncMigrations
   module Migration
-    class Overwrite < Base
+    class Overwrite
       attr_reader :instance, :method_name
 
       def initialize(instance, method_name)
         @instance = instance
-        @method = method
+        @method_name = method_name
       end
 
       def perform
@@ -20,7 +20,7 @@ module RailsAsyncMigrations
       end
 
       def trigger_callback
-        instance.trigger_callback(method_name) if defined? :trigger_callback
+        instance.send(:trigger_callback, method_name) if defined? :trigger_callback
       end
 
       def tracer

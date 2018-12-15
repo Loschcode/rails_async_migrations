@@ -25,6 +25,14 @@ module RailsAsyncMigrations
         # )
       end
 
+      def direction
+        if instance.reverting?
+          :down
+        else
+          :up
+        end
+      end
+
       # def catch_direction
       #   migration_class
       # end

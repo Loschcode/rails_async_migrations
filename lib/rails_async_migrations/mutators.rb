@@ -17,12 +17,8 @@ module RailsAsyncMigrations
     # # do not overwrite those methods if you don't know
     # # exactly what you're doing
 
-    # def async_overwrite(method)
-    #   AsyncOverwrite.new(self, method).perform
-    # end
-
-    # def async_callback(method)
-    #   AsyncCallback.new(self, method).perform
-    # end
+    def trigger_callback(method)
+      TriggerCallback.new(self, method).perform
+    end
   end
 end

@@ -1,6 +1,6 @@
-require 'rails_async_migrations/locker/lock'
-require 'rails_async_migrations/locker/overwrite'
-require 'rails_async_migrations/locker/method_added'
+require 'rails_async_migrations/migration/lock'
+require 'rails_async_migrations/migration/overwrite'
+require 'rails_async_migrations/migration/method_added'
 
 # when included this class is the gateway
 # to the method locking system
