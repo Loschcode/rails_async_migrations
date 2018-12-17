@@ -12,26 +12,36 @@ module RailsAsyncMigrations
       # this method can be called multiple times (we should see what manages this actually)
       # if you use up down and change it'll be called 3 times for example
       def perform
-        enqueue_asynchronous
-        fire_queue if last_migration?
+        enqueue_asynchronous unless already_enqueued?
+        fire_queue
       end
 
       private
 
       def enqueue_asynchronous
+        puts "CURRENT #{current_migration_version}"
         AsyncSchemaMigration.create!(
-          version: current_migration,
+          version: current_migration_version,
           direction: direction,
           state: 'created'
         )
       end
 
-      def fire_queue
-        # TODO : here we should launch the "central" worker which will fire the queue
+      def already_enqueued?
+        AsyncSchemaMigration.find_by(
+          version: current_migration_version,
+          direction: direction
+        )
       end
 
-      def last_migration?
-        # TODO : do this shit
+      #  Migrator.new(:up, selected_migrations, target_version).migrate
+      def fire_queue
+        puts "firing"
+        migration = migration_from current_migration_version
+        # TODO : make the `turn_async` ignored system
+        ActiveRecord::Migrator.new(direction, [migration]).migrate
+        puts "done firing"
+        # TODO : here we should launch the "central" worker which will fire the queue
       end
 
       def direction
@@ -42,15 +52,30 @@ module RailsAsyncMigrations
         end
       end
 
-      #  Migrator.new(:up, selected_migrations, target_version).migrate
-      # TODO : check migration_context.current_version
-      def current_migration
-        pending_migrations.first
+      def migration_from(version)
+        migration_context.migrations.find do |migration|
+          migration.version == version
+        end
       end
 
-      # TODO this works only when you go forward not backward
+      def current_migration_version
+        if direction == :down
+          migration_context.current_version
+        elsif direction == :up
+          pending_migrations.first
+        end
+      end
+
       def pending_migrations
-        migration_context.migrations.map(&:version) - migration_context.get_all_versions
+        achieved_migrations - all_migrations
+      end
+
+      def achieved_migrations
+        migration_context.migrations.collect(&:version)
+      end
+
+      def all_migrations
+        migration_context.get_all_versions
       end
 
       def migration_context
