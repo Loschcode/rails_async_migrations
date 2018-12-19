@@ -35,13 +35,17 @@ module RailsAsyncMigrations
       end
 
       #  Migrator.new(:up, selected_migrations, target_version).migrate
+       # TODO : here we should launch the "central" worker which will fire the queue
+       # instead of directly firing the queue
       def fire_queue
-        puts "firing"
         migration = migration_from current_migration_version
-        # TODO : make the `turn_async` ignored system
-        ActiveRecord::Migrator.new(direction, [migration]).migrate
-        puts "done firing"
-        # TODO : here we should launch the "central" worker which will fire the queue
+        run_migration_for direction, migration
+      end
+
+      # we run the migration ignoring the
+      # turn_async system
+      def run_migration_for(direction, migration)
+        Migration::Run.new(direction, migration).perform
       end
 
       def direction

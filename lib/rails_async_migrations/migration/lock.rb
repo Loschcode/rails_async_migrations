@@ -4,33 +4,56 @@
 module RailsAsyncMigrations
   module Migration
     class Lock
-      attr_reader :resource_class, :method_name, :overwrite_with
+      attr_reader :resource_class, :method_name
 
-      def initialize(resource_class, method_name, overwrite_with: nil)
+      def initialize(resource_class, method_name)
         @resource_class = resource_class
         @method_name = method_name
-        @overwrite_with = overwrite_with
       end
 
       def perform
         return false unless locked_method?
         return false if unlocked?
 
+        preserve_method_logics
+
         suspend_lock do
-          resource_class.define_method(method_name, &overwrite_with) if overwrite_with
+          overwrite_method
         end
       end
-
-      def unlocked?
-        locked == false
-      end
-
-      private
 
       def suspend_lock(&block)
         unlock
         yield if block_given?
         lock
+      end
+
+      private
+
+      def unlocked?
+        locked == false
+      end
+
+      def clone_method_name
+        "async_#{method_name}"
+      end
+
+      def preserve_method_logics
+        resource_class.define_method(clone_method_name, &captured_method)
+      end
+
+      def captured_method
+        resource_class.new.method(method_name).clone
+      end
+
+      def overwrite_method
+        resource_class.define_method(method_name, &overwrite_closure)
+      end
+
+      def overwrite_closure
+        proc do
+          Overwrite.new(self, __method__).perform
+        end
       end
 
       def lockable?
