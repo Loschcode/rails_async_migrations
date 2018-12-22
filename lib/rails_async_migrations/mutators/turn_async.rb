@@ -8,6 +8,7 @@ module RailsAsyncMigrations
       end
 
       def perform
+        puts "turn_async called"
         alter_migration
       end
 

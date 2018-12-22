@@ -10,17 +10,23 @@ module RailsAsyncMigrations
 
       def perform
         unlock_migration_methods
-        # run_migration
+        delete_migration_state
+        run_migration
+        delete_migration_state
+        puts "nothing should happen from now on"
         lock_migration_methods
       end
 
       private
 
-      # TODO : this is not the correct logic
-      # because it uses the normal migration database schema
-      # and this crahses the system.
       def run_migration
+        puts "about to migrate"
         migrator_instance.migrate
+        puts "we migrated"
+      end
+
+      def delete_migration_state
+        ActiveRecord::SchemaMigration.find_by(version: migration.version)&.delete
       end
 
       def migrator_instance
@@ -43,9 +49,11 @@ module RailsAsyncMigrations
 
       # TODO : not sure it's useful this one
       def lock_migration_methods
+        puts "we lock"
         locked_methods.each do |method_name|
           Migration::Lock.new(class_name, method_name).perform
         end
+        puts "finished locking again"
       end
     end
   end

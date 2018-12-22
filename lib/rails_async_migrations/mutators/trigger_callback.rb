@@ -14,6 +14,7 @@ module RailsAsyncMigrations
       def perform
         enqueue_asynchronous unless already_enqueued?
         fire_queue
+        puts "callback perform done"
       end
 
       private
@@ -38,8 +39,10 @@ module RailsAsyncMigrations
        # TODO : here we should launch the "central" worker which will fire the queue
        # instead of directly firing the queue
       def fire_queue
+        puts "we fire queue"
         migration = migration_from current_migration_version
         run_migration_for direction, migration
+        puts "we finished to fire the queue"
       end
 
       # we run the migration ignoring the

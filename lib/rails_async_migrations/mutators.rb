@@ -19,6 +19,7 @@ module RailsAsyncMigrations
 
     def trigger_callback(method)
       TriggerCallback.new(self, method).perform
+      puts "clearly trigger callback is done with"
     end
   end
 end
