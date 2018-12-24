@@ -9,7 +9,7 @@ module RailsAsyncMigrations
       def perform(async_schema_migration_id)
         migration = AsyncSchemaMigration.find(async_schema_migration_id)
         migration.update state: 'processing'
-        # NOTE : handle failed on crash of this part
+        # TODO : handle failed on crash of this part
         Migration::Run.new(migration.direction, migration.migration).perform
         migration.update state: 'done'
         CheckQueueWorker.perform_async

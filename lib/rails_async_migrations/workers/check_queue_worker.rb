@@ -13,15 +13,11 @@ module RailsAsyncMigrations
       end
 
       def next_migration
-        @next_migration ||= AsyncSchemaMigration.find_by(
-          state: 'created',
-          version: active_record.current_version,
-          direction: active_record.current_direction
-        )
-      end
-
-      def active_record
-        @active_record ||= Adapters::ActiveRecord.new
+        @next_migration ||= AsyncSchemaMigration.where(
+          state: 'created'
+        ).order(
+          version: :asc
+        ).first
       end
     end
   end
