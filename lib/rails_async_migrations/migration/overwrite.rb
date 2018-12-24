@@ -20,7 +20,6 @@ module RailsAsyncMigrations
       end
 
       def trigger_callback
-        puts "we trigger callback"
         instance.send(:trigger_callback, method_name) if defined? :trigger_callback
       end
 

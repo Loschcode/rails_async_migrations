@@ -13,16 +13,13 @@ module RailsAsyncMigrations
         delete_migration_state
         run_migration
         delete_migration_state
-        puts "nothing should happen from now on"
         lock_migration_methods
       end
 
       private
 
       def run_migration
-        puts "about to migrate"
         migrator_instance.migrate
-        puts "we migrated"
       end
 
       def delete_migration_state
@@ -47,13 +44,10 @@ module RailsAsyncMigrations
         end
       end
 
-      # TODO : not sure it's useful this one
       def lock_migration_methods
-        puts "we lock"
         locked_methods.each do |method_name|
           Migration::Lock.new(class_name, method_name).perform
         end
-        puts "finished locking again"
       end
     end
   end
