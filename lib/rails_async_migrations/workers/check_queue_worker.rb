@@ -8,11 +8,13 @@ module RailsAsyncMigrations
 
       def perform
         return unless next_migration
+        next_migration.update state: 'pending'
         FireMigrationWorker.perform_async(next_migration.id)
       end
 
       def next_migration
         @next_migration ||= AsyncSchemaMigration.find_by(
+          state: 'created',
           version: active_record.current_version,
           direction: active_record.current_direction
         )
