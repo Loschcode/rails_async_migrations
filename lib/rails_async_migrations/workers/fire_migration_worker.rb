@@ -9,10 +9,17 @@ module RailsAsyncMigrations
       def perform(async_schema_migration_id)
         migration = AsyncSchemaMigration.find(async_schema_migration_id)
         migration.update state: 'processing'
-        # TODO : handle failed on crash of this part
-        Migration::Run.new(migration.direction, migration.migration).perform
+        run_migration_with migration
         migration.update state: 'done'
         CheckQueueWorker.perform_async
+      end
+
+      def run_migration_with(migration)
+        Migration::Run.new(migration.direction, migration.migration).perform
+      rescue Exception => exception
+        migration.update state: 'failed'
+      ensure
+        raise Exception, exception
       end
     end
   end
