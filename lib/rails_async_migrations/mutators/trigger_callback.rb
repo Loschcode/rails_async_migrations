@@ -34,11 +34,19 @@ module RailsAsyncMigrations
       end
 
       def check_queue
-        CheckQueueWorker.perform_async
+        RailsAsyncMigrations::Workers::CheckQueueWorker.perform_async
       end
 
       def active_record
-        @active_record ||= Adapters::ActiveRecord.new
+        @active_record ||= Adapters::ActiveRecord.new(direction)
+      end
+
+      def direction
+        if instance.reverting?
+          :down
+        else
+          :up
+        end
       end
     end
   end

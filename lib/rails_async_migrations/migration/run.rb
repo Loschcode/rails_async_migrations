@@ -1,11 +1,15 @@
+# to run actual migration we need to require the migration files
 module RailsAsyncMigrations
   module Migration
     class Run
-      attr_reader :direction, :migration
+      attr_reader :direction, :version, :migration
 
-      def initialize(direction, migration)
+      def initialize(direction, version)
         @direction = direction
-        @migration = migration
+        @version = version
+        @migration = migration_from version
+
+        require "#{Rails.root}/#{migration.filename}"
       end
 
       def perform
@@ -18,16 +22,21 @@ module RailsAsyncMigrations
 
       private
 
+      def migration_from(version)
+        Adapters::ActiveRecord.new(direction).migration_from version
+      end
+
       def run_migration
-        migrator_instance.migrate
+        # TODO : improve this by launching all methods defined
+        class_name.new.change
+      end
+
+      def schema_migration
+        @schema_migration ||= ActiveRecord::SchemaMigration.find_by(version: version)
       end
 
       def delete_migration_state
-        ActiveRecord::SchemaMigration.find_by(version: migration.version)&.delete
-      end
-
-      def migrator_instance
-        @migrator_instance ||= ActiveRecord::Migrator.new(direction, [migration])
+        schema_migration&.delete
       end
 
       def class_name

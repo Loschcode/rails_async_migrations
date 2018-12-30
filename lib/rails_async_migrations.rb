@@ -1,10 +1,15 @@
 require 'active_support'
+require 'sidekiq'
+
+require 'rails_async_migrations/adapters/active_record'
 require 'rails_async_migrations/config'
 require 'rails_async_migrations/migration'
 require 'rails_async_migrations/mutators'
 require 'rails_async_migrations/tracer'
 require 'rails_async_migrations/version'
 require 'rails_async_migrations/models/async_schema_migration'
+require 'rails_async_migrations/workers/check_queue_worker'
+require 'rails_async_migrations/workers/fire_migration_worker'
 
 module RailsAsyncMigrations
   class Error < StandardError; end

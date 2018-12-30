@@ -1,6 +1,12 @@
 module RailsAsyncMigrations
   module Adapters
     class ActiveRecord
+      attr_reader :current_direction
+
+      def initialize(current_direction)
+        @current_direction = current_direction
+      end
+
       def current_version
         if current_direction == :down
           migration_context.current_version
@@ -9,12 +15,14 @@ module RailsAsyncMigrations
         end
       end
 
-      def current_direction
-        if instance.reverting?
-          :down
-        else
-          :up
+      def migration_from(version)
+        migration_context.migrations.find do |migration|
+          migration.version.to_s == version.to_s
         end
+      end
+
+      def current_migration
+        @current_migration ||= migration_from current_version
       end
 
       def allowed_direction?
@@ -22,16 +30,6 @@ module RailsAsyncMigrations
       end
 
       private
-
-      def migration
-        @migration ||= migration_from current_version
-      end
-
-      def migration_from(version)
-        migration_context.migrations.find do |migration|
-          migration.version == version
-        end
-      end
 
       def pending_migrations
         achieved_migrations - all_migrations
@@ -52,7 +50,7 @@ module RailsAsyncMigrations
       # NOTE: seems at it was ActiveRecord::Migrator
       # in anterior versions
       def connection
-        @connection || ActiveRecord::Base.connection
+        @connection || ::ActiveRecord::Base.connection
       end
     end
   end

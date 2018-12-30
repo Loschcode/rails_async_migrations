@@ -9,7 +9,7 @@ module RailsAsyncMigrations
       def perform
         return unless next_migration
         next_migration.update state: 'pending'
-        FireMigrationWorker.perform_async(next_migration.id)
+        RailsAsyncMigrations::Workers::FireMigrationWorker.perform_async(next_migration.id)
       end
 
       def next_migration
