@@ -2,6 +2,19 @@
 
 `ActiveRecord::Migration` extension to turn your migrations asynschonous in a simple and straight forward way.
 
+## Motives
+
+This library was made with the intent to help small companies which are struggling to scale at technical level. Small projects don't need asynchronous migrations queues, and big companies build their own parallel systems when facing scaling problems, but what about medium sized companies with limited resources ?
+
+When a project grows, your database start to be heavy and changing the data through the deployment process can be very painful. There is numerous reason you want this process to be partially asynchronous.
+
+Most people turn heavy data changes into `rake tasks` or split workers ; there's two school of thought about this.
+
+1. Migrations should only mutate database structures and not its data, and if it's the case, it should be split and processed via other means.
+2. Migrations are everything which alter data one time, typically during a deployment of new code and structure.
+
+Turning data changes into a `rake task` can be a good idea, and it's ideal to test it out too, but sometimes you need this **fat ass loop** which will be ran **once, and only once** to be ran fast, and making a `rake task` for that is overkill. This gem is here to answer this need.
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -33,19 +46,6 @@ class CreateAsyncSchemaMigrations < ActiveRecord::Migration[5.2]
   end
 end
 ```
-
-## Motives
-
-This library was made with the intent to help small companies which are struggling to scale at technical level. Small projects don't need asynchronous migrations queues, and big companies build their own parallel systems when facing scaling problems, but what about medium sized companies with limited resources ?
-
-When a project grows, your database start to be heavy and changing the data through the deployment process can be very painful. There is numerous reason you want this process to be partially asynchronous.
-
-Most people turn heavy data changes into `rake tasks` or split workers ; there's two school of thought about this.
-
-1. Migrations should only mutate database structures and not its data, and if it's the case, it should be split and processed via other means.
-2. Migrations are everything which alter data one time, typically during a deployment of new code and structure.
-
-Turning data changes into a `rake task` can be a good idea, and it's ideal to test it out too, but sometimes you need this **fat ass loop** which will be ran **once, and only once** to be ran fast, and making a `rake task` for that is overkill. This gem is here to answer this need.
 
 ## Usage
 
