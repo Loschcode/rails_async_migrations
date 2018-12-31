@@ -1,4 +1,5 @@
 require 'active_support'
+require 'active_record'
 require 'sidekiq'
 
 require 'rails_async_migrations/adapters/active_record'

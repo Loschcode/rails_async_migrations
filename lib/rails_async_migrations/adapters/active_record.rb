@@ -1,20 +1,24 @@
 module RailsAsyncMigrations
   module Adapters
     class ActiveRecord
-      attr_reader :current_direction
+      attr_reader :direction
 
-      def initialize(current_direction)
-        @current_direction = current_direction
+      def initialize(direction)
+        @direction = direction
       end
 
       # NOTE : down isn't available
       # from the public API of the gem
       def current_version
-        if current_direction == :down
+        if direction == :down
           migration_context.current_version
-        elsif current_direction == :up
+        elsif direction == :up
           pending_migrations.first
         end
+      end
+
+      def current_migration
+        @current_migration ||= migration_from current_version
       end
 
       def migration_from(version)
@@ -23,12 +27,8 @@ module RailsAsyncMigrations
         end
       end
 
-      def current_migration
-        @current_migration ||= migration_from current_version
-      end
-
       def allowed_direction?
-        current_direction == :up
+        direction == :up
       end
 
       private

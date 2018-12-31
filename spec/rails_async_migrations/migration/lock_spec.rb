@@ -1,4 +1,4 @@
-RSpec.describe RailsAsyncMigrations::Locker::Lock do
+RSpec.describe RailsAsyncMigrations::Migration::Lock do
   let(:resource_class) { FakeClass }
   let(:resource_instance) { resource_class.new }
   let(:method) { :free_method }

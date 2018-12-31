@@ -28,7 +28,7 @@ module RailsAsyncMigrations
         Migration::Run.new(migration.direction, migration.version).perform
       rescue Exception => exception
         failed_with! exception
-        raise_again exception
+        raise Exception, "#{error}"
       end
 
       def done?
@@ -50,10 +50,6 @@ module RailsAsyncMigrations
       def failed_with!(error)
         migration.update! state: 'failed'
         Tracer.new.verbose "Migration #{migration.id} failed with exception `#{error}`"
-      end
-
-      def raise_again(error)
-        raise Exception, "#{error}"
       end
     end
   end
