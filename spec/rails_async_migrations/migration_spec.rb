@@ -1,4 +1,4 @@
-igrRSpec.describe RailsAsyncMigrations::Migration do
+RSpec.describe RailsAsyncMigrations::Migration do
   let(:resource_class) { FakeClass }
   let(:instance) { resource_class.new }
   let(:method) { :free_method }
