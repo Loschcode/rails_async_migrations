@@ -121,6 +121,10 @@ You're more than welcome to open an issue with feature requests so I can work on
 
 [Laurent Schaffner](http://www.laurentschaffner.com)
 
+## Credits
+
+This project and its idea was inspired by [Kir Shatrov article](https://kirshatrov.com/2018/04/01/async-migrations/)
+
 ## License
 
 MIT License.
