@@ -1,3 +1,5 @@
+require 'rails_async_migrations/migration/check_queue'
+require 'rails_async_migrations/migration/fire_migration'
 require 'rails_async_migrations/migration/lock'
 require 'rails_async_migrations/migration/method_added'
 require 'rails_async_migrations/migration/overwrite'
