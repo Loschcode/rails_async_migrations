@@ -6,14 +6,14 @@
 
 This library was made with the intent to help small companies which are struggling to scale at technical level. Small projects don't need asynchronous migrations queues, and big companies build their own parallel systems when facing scaling problems, but what about medium sized companies with limited resources ?
 
-When a project grows, your database start to be heavy and changing the data through the deployment process can be very painful. There is numerous reason you want this process to be partially asynchronous.
+When a project grows, your database start to be heavy and changing the data through the deployment process can be very painful. There are numerous reasons you want this process to be [at least] partially asynchronous.
 
-Most people turn heavy data changes into `rake tasks` or split workers ; there's two school of thought about this.
+Most people turn heavy data changes into `rake tasks` or split workers ; there are two schools of thought about this.
 
 1. Migrations should only mutate database structures and not its data, and if it's the case, it should be split and processed via other means.
 2. Migrations are everything which alter data one time, typically during a deployment of new code and structure.
 
-Turning data changes into a `rake task` can be a good idea, and it's ideal to test it out too, but sometimes you need this **fat ass loop** which will be ran **once, and only once** to be ran fast, and making a `rake task` for that is overkill. This gem is here to answer this need.
+Turning data changes into a `rake task` can be a good idea, and it's ideal to test it out too, but sometimes you need this **fat ass loop** which will be run **once, and only once** to be run fast and without locking down the deployment process itself; making a `rake task` for that is overkill. This gem is here to answer this need.
 
 ## Installation
 
@@ -67,7 +67,9 @@ Now when you'll run the migration it'll simply run the normal queue, but the con
 
 What is turned asynchronous will be executed exactly the same way as a classical migration, which means you can use all keywords of the classic `ActiveRecord::Migration` such as `create_table`, `add_column`, etc.
 
-Each migration which is turned asynchronous will follow each other, once one migration of the queue is ended without problem, it passes to the next one. If it fails, the error will be raised within the worker so it retries until it eventually works, or until it's considered dead. None of the further asynchronous migrations will be run until you fix the failed one, which is a good protection for data consistency.
+Each migration which is turned asynchronous will follow each other, once one migration of the queue is ended without problem, it passes to the next one.
+
+If it fails, the error will be raised within the worker so it retries until it eventually works, or until it's considered dead. None of the further asynchronous migrations will be run until you fix the failed one, which is a good protection for data consistency.
 
 You can also manually launch the queue check and fire by using:
 
