@@ -9,7 +9,8 @@ class AsyncSchemaMigration < ActiveRecord::Base
   scope :pending, -> { where(state: 'pending').by_version }
   scope :processing, -> { where(state: 'processing').by_version }
   scope :done, -> { where(state: 'done').by_version }
-  scope :by_version, -> { where(version: :asc) }
+  scope :failed, -> { where(state: 'failed').by_version }
+  scope :by_version, -> { order(version: :asc) }
 
   def trace
     puts "Asynchronous migration `#{id}` is now `#{state}`"
