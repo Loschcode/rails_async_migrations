@@ -63,11 +63,13 @@ class Test < ActiveRecord::Migration[5.2]
 end
 ```
 
-Now when you'll run the migration it'll simply run the normal queue, but the content of `#change` will be taken away and executed into an asynchronous queue.
+From now on, when you run this migration it'll simply run the normal queue, but the content of `#change` will be taken away and later on executed into an asynchronous queue.
 
-What is turned asynchronous will be executed exactly the same way as a classical migration, which means you can use all keywords of the classic `ActiveRecord::Migration` such as `create_table`, `add_column`, etc.
+What is turned asynchronous is executed exactly the same way as a classical migration, which means you can use all keywords of the classic `ActiveRecord::Migration` such as `create_table`, `add_column`, etc.
 
-Each migration which is turned asynchronous will follow each other, once one migration of the queue is ended without problem, it passes to the next one.
+## Queue
+
+Each migration which is turned asynchronous follows each other, once one migration of the queue is ended without problem, it passes to the next one.
 
 If it fails, the error will be raised within the worker so it retries until it eventually works, or until it's considered dead. None of the further asynchronous migrations will be run until you fix the failed one, which is a good protection for data consistency.
 
