@@ -7,6 +7,8 @@ module RailsAsyncMigrations
         @current_direction = current_direction
       end
 
+      # NOTE : down isn't available
+      # from the public API of the gem
       def current_version
         if current_direction == :down
           migration_context.current_version

@@ -14,16 +14,8 @@ require 'rails_async_migrations/workers/fire_migration_worker'
 
 module RailsAsyncMigrations
   class Error < StandardError; end
-  # METHODS_MAP = [:async]
 
   class << self
-    #   def method_missing(method, *args)
-    #     unless METHODS_MAP.include?(method)
-    #       raise Error, "Invalid action. Please use the methods available (#{METHODS_MAP.join(', ')})"
-    #     end
-    #     Request.const_get(method.capitalize).new(*args)
-    #   end
-
     def config
       @config ||= Config.new
       if block_given?
