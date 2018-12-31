@@ -60,6 +60,8 @@ You can also manually launch the queue check and fire by using:
 
     $ rake rails_async_migrations:check_queue
 
+**For now, there is no rollback mechanism authorized, even if the source code is pratically for it, it complexifies the logic and may not be needed.**
+
 ## States
 
 | State          | Description                                                                                                                  |
@@ -84,6 +86,10 @@ Turning data changes into a `rake task` can be a good idea, and it's ideal to te
 ## Workers
 
 For now, the system works slowly coupled with Sidekiq. If you use other technologies, please hit me up and I'll create additional adapters for you.
+
+## Compatibility
+
+The gem has been tested and is working with `ActiveRecord 5.2.2`, if you want it compatible with earlier versions, please hit me up.
 
 ## Development
 
