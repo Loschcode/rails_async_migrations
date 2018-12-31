@@ -1,6 +1,6 @@
 # RailsAsyncMigrations
 
-`ActiveRecord::Migration` extension to turn your migration asynschonous in a simple and straight forward way.
+`ActiveRecord::Migration` extension to turn your migrations asynschonous in a simple and straight forward way.
 
 ## Installation
 
@@ -18,7 +18,21 @@ After the gem has been installed, use the generator to add the needed changes
 
     $ rails generate rails_async_migrations:install
 
-This will add a new migration for the table `async_schema_migrations` which will be used by the gem.
+This will add a new migration for the table `async_schema_migrations` which will be used by the gem. You can also add the migration yourself like so:
+
+```
+class CreateAsyncSchemaMigrations < ActiveRecord::Migration[5.2]
+  def change
+    create_table :async_schema_migrations do |t|
+      t.string :version
+      t.string :direction
+      t.string :state
+
+      t.timestamps
+    end
+  end
+end
+```
 
 ## Usage
 
