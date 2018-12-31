@@ -34,9 +34,22 @@ class CreateAsyncSchemaMigrations < ActiveRecord::Migration[5.2]
 end
 ```
 
+## Motives
+
+This library was made with the intent to help small companies which are struggling to scale at technical level. Small projects don't need asynchronous migrations queues, and big companies build their own parallel systems when facing scaling problems, but what about medium sized companies with limited resources ?
+
+When a project grows, your database start to be heavy and changing the data through the deployment process can be very painful. There is numerous reason you want this process to be partially asynchronous.
+
+Most people turn heavy data changes into `rake tasks` or split workers ; there's two school of thought about this.
+
+1. Migrations should only mutate database structures and not its data, and if it's the case, it should be split and processed via other means.
+2. Migrations are everything which alter data one time, typically during a deployment of new code and structure.
+
+Turning data changes into a `rake task` can be a good idea, and it's ideal to test it out too, but sometimes you need this **fat ass loop** which will be ran **once, and only once** to be ran fast, and making a `rake task` for that is overkill. This gem is here to answer this need.
+
 ## Usage
 
-To turn some of your migrations asynchronous, just use the `turn_async` keyword.
+To turn some of your migrations asynchronous, generate a migration as you would normally do and use the `turn_async` keyword.
 
 ```
 class Test < ActiveRecord::Migration[5.2]
@@ -50,23 +63,17 @@ class Test < ActiveRecord::Migration[5.2]
 end
 ```
 
-Now when you'll run the migration it'll simply run the migrations in queue as it would usually do, but the content of `#change` will be taken away and executed into an asynchronous queue.
+Now when you'll run the migration it'll simply run the normal queue, but the content of `#change` will be taken away and executed into an asynchronous queue.
 
 What is turned asynchronous will be executed exactly the same way as a classical migration, which means you can use all keywords of the classic `ActiveRecord::Migration` such as `create_table`, `add_column`, etc.
 
-Each migration which is turned asynchronous will follow each other, once one the first migration of the queue is ended without problem, it pass to the next one. If it fails, the error will be raised within the worker so it retries until it works, or until it's considered dead.
+Each migration which is turned asynchronous will follow each other, once one migration of the queue is ended without problem, it passes to the next one. If it fails, the error will be raised within the worker so it retries until it eventually works, or until it's considered dead. None of the further asynchronous migrations will be run until you fix the failed one, which is a good protection for data consistency.
 
 You can also manually launch the queue check and fire by using:
 
     $ rake rails_async_migrations:check_queue
 
-**For now, there is no rollback mechanism authorized, even if the source code is pratically for it, it complexifies the logic and may not be needed.**
-
-## Failure handling
-
-If your migration crashes, won't be working any time soon and block the rest of your asynchronous migrations, you can change the code of the migration file and push it again so it passes, or simply remove / update as `state = done` the matching `async_schema_migrations` row.
-
-The `version` value is always the same as the classic migrations ones.
+**For now, there is no rollback mechanism authorized, even if the source code is ready for it, it complexifies the build up logic and may not be needed in asynchronous cases.**
 
 ## States
 
@@ -78,16 +85,11 @@ The `version` value is always the same as the classic migrations ones.
 | **done**       | the migration was successful                                                                                                 |
 | **failed**     | the migration failed while being processed, there may be other attempts to make it pass depending your workers configuration |
 
-## Motives
+## Failure handling
 
-This library was made with the intent to help startups which are struggling to scale. Small projects don't need asynchronous migrations queues, and big companies build their own parallel systems when facing scaling problems, but what about medium sized companies with limited resources ?
+If your migration crashes, and block the rest of your asynchronous migrations but you want to execute the rest anyway, you can change the code of the migration file and push it again so it passes, or simply remove / update as `state = done` the matching `async_schema_migrations` row.
 
-When a project grows, your database start to be heavy and changing the data through the deployment process can be very painful. Most people turn heavy data changes into `rake tasks` ; there's two school of thought about this.
-
-1. Migrations should only mutate database structures and not its data, and other things should be processed via other means.
-2. Migrations are everything which alter data one time, typicall during a deployment of new code.
-
-Turning data changes into a `rake task` can be a good idea, and it's ideal to test it out too, but sometimes you need this fat ass loop which will be ran once, and only once and making a `rake task` for that it's overkill. This gem is here to answer to this need.
+The `version` value is always the same as the classic migrations ones.
 
 ## Workers
 
