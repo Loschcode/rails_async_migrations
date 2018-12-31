@@ -34,6 +34,7 @@ module RailsAsyncMigrations
       end
 
       def check_queue
+        puts "check queue trigger callback"
         RailsAsyncMigrations::Workers::CheckQueueWorker.perform_async
       end
 

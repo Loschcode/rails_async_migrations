@@ -7,6 +7,7 @@ require 'rails_async_migrations/migration'
 require 'rails_async_migrations/mutators'
 require 'rails_async_migrations/tracer'
 require 'rails_async_migrations/version'
+require 'rails_async_migrations/railtie' if defined?(Rails)
 require 'rails_async_migrations/models/async_schema_migration'
 require 'rails_async_migrations/workers/check_queue_worker'
 require 'rails_async_migrations/workers/fire_migration_worker'

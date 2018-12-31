@@ -7,17 +7,44 @@ module RailsAsyncMigrations
       sidekiq_options queue: :default
 
       def perform
-        return unless next_migration
+        if failed_migration
+          puts "there is a failing migration, we cannot run further"
+          return
+        end
+
+        if pending_migration || processing_migration
+          puts "already a pending migration, we exit"
+          return
+        end
+
+        unless next_migration
+          puts "no migration in queue"
+          return
+        end
+
         next_migration.update state: 'pending'
+        puts "next_migration put in queue as pending #{next_migration.id}"
         RailsAsyncMigrations::Workers::FireMigrationWorker.perform_async(next_migration.id)
       end
 
       def next_migration
-        @next_migration ||= AsyncSchemaMigration.where(
-          state: 'created'
-        ).order(
-          version: :asc
-        ).first
+        created_migration
+      end
+
+      def processing_migration
+        @processing_migration ||= AsyncSchemaMigration.processing.first
+      end
+
+      def pending_migration
+        @pending_migration ||= AsyncSchemaMigration.pending.first
+      end
+
+      def created_migration
+        @created_migration ||= AsyncSchemaMigration.created.first
+      end
+
+      def failed_migration
+        @failed_migration ||= AsyncSchemaMigration.failed.first
       end
     end
   end

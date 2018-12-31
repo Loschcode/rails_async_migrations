@@ -20,6 +20,7 @@ module RailsAsyncMigrations
         Migration::Run.new(migration.direction, migration.version).perform
       rescue Exception => exception
         migration.update! state: 'failed'
+        puts "migration is considered failed"
         raise Exception, "#{exception}"
       end
     end
