@@ -8,11 +8,16 @@ module RailsAsyncMigrations
 
       def perform(async_schema_migration_id)
         migration = AsyncSchemaMigration.find(async_schema_migration_id)
-        return if migration.state == 'done'
+
+        if migration.state == 'done'
+          Tracer.new.verbose "Migration #{migration.id} is already `done`, cancelling fire"
+          return
+        end
 
         migration.update! state: 'processing'
         run_migration_with migration
         migration.update! state: 'done'
+        Tracer.new.verbose "Migration #{migration.id} was correctly processed"
         Workers::CheckQueueWorker.perform_async
       end
 
@@ -20,7 +25,7 @@ module RailsAsyncMigrations
         Migration::Run.new(migration.direction, migration.version).perform
       rescue Exception => exception
         migration.update! state: 'failed'
-        puts "migration is considered failed"
+        Tracer.new.verbose "Migration #{migration.id} failed with exception `#{exception}`"
         raise Exception, "#{exception}"
       end
     end

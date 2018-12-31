@@ -11,7 +11,10 @@ module RailsAsyncMigrations
       # this method can be called multiple times (we should see what manages this actually)
       # if you use up down and change it'll be called 3 times for example
       def perform
-        return unless active_record.allowed_direction?
+        unless active_record.allowed_direction?
+          Tracer.new.verbose "Direction `#{direction}` not allowed."
+          return
+        end
         enqueue_asynchronous unless already_enqueued?
         check_queue
       end
@@ -34,7 +37,6 @@ module RailsAsyncMigrations
       end
 
       def check_queue
-        puts "check queue trigger callback"
         RailsAsyncMigrations::Workers::CheckQueueWorker.perform_async
       end
 

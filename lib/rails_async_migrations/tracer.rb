@@ -1,6 +1,5 @@
 # log things and dispatch them wherever
 # depending on the context mode
-# TODO : to fully test
 module RailsAsyncMigrations
   class Tracer
     def initialize
@@ -8,7 +7,6 @@ module RailsAsyncMigrations
 
     def verbose(text)
       return unless verbose?
-
       puts text
     end
 

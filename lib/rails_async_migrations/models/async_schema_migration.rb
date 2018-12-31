@@ -13,6 +13,6 @@ class AsyncSchemaMigration < ActiveRecord::Base
   scope :by_version, -> { order(version: :asc) }
 
   def trace
-    puts "Asynchronous migration `#{id}` is now `#{state}`"
+    RailsAsyncMigrations::Tracer.new.verbose "Asynchronous migration `#{id}` is now `#{state}`"
   end
 end

@@ -8,7 +8,7 @@ module RailsAsyncMigrations
       end
 
       def perform
-        puts "turn_async called"
+        Tracer.new.verbose '`turn_async` has been triggered'
         alter_migration
       end
 

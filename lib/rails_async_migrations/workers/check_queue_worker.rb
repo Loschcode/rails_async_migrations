@@ -7,23 +7,25 @@ module RailsAsyncMigrations
       sidekiq_options queue: :default
 
       def perform
+        Tracer.new.verbose 'Check queue has been triggered'
+
         if failed_migration
-          puts "there is a failing migration, we cannot run further"
+          Tracer.new.verbose 'Failing migration blocking the queue, cancelling check'
           return
         end
 
         if pending_migration || processing_migration
-          puts "already a pending migration, we exit"
+          Tracer.new.verbose 'Another migration under progress, cancelling check'
           return
         end
 
         unless next_migration
-          puts "no migration in queue"
+          Tracer.new.verbose 'No migration in queue, cancelling check'
           return
         end
 
+        Tracer.new.verbose "Migration `#{next_migration.id}` will now be processed"
         next_migration.update state: 'pending'
-        puts "next_migration put in queue as pending #{next_migration.id}"
         RailsAsyncMigrations::Workers::FireMigrationWorker.perform_async(next_migration.id)
       end
 
