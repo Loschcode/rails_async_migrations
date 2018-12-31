@@ -62,6 +62,12 @@ You can also manually launch the queue check and fire by using:
 
 **For now, there is no rollback mechanism authorized, even if the source code is pratically for it, it complexifies the logic and may not be needed.**
 
+## Failure handling
+
+If your migration crashes, won't be working any time soon and block the rest of your asynchronous migrations, you can change the code of the migration file and push it again so it passes, or simply remove / update as `state = done` the matching `async_schema_migrations` row.
+
+The `version` value is always the same as the classic migrations ones.
+
 ## States
 
 | State          | Description                                                                                                                  |
