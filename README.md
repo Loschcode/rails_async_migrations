@@ -13,7 +13,7 @@ Most people turn heavy data changes into `rake tasks` or split workers ; there a
 1. Migrations should only mutate database structures and not its data, and if it's the case, it should be split and processed via other means.
 2. Migrations are everything which alter data one time, typically during a deployment of new code and structure.
 
-Turning data changes into a `rake task` can be a good idea, and it's ideal to test it out too, but sometimes you need this **fat ass loop** which will be run **once, and only once** to be run fast and without locking down the deployment process itself; making a `rake task` for that is overkill. This gem is here to answer this need.
+Turning data changes into a `rake task` can be a good idea, and it's ideal to test it out too, but sometimes you need this **fat ass loop** of **>1,000,000 records** which will be run **once, and only once** to be run fast and without locking down the deployment process itself; making a `rake task` for that is overkill. This gem is here to answer this need.
 
 ## Installation
 
