@@ -28,7 +28,7 @@ module RailsAsyncMigrations
         Migration::Run.new(migration.direction, migration.version).perform
       rescue Exception => exception
         failed_with! exception
-        raise Exception, "#{error}"
+        raise
       end
 
       def done?

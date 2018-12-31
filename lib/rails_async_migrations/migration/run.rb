@@ -9,7 +9,8 @@ module RailsAsyncMigrations
         @version = version
         @migration = migration_from version
 
-        require "#{Rails.root}/#{migration.filename}"
+        ensure_data_consistency
+        require "#{Rails.root}/#{migration.filename}" if defined? Rails
       end
 
       def perform
@@ -59,6 +60,12 @@ module RailsAsyncMigrations
       def lock_migration_methods
         locked_methods.each do |method_name|
           Migration::Lock.new(class_name, method_name).perform
+        end
+      end
+
+      def ensure_data_consistency
+        unless migration
+          raise RailsAsyncMigrations::Error, "No migration from version `#{version}`"
         end
       end
     end
