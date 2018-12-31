@@ -27,8 +27,11 @@ module RailsAsyncMigrations
       end
 
       def run_migration
-        # TODO : improve this by launching all methods defined
-        class_name.new.change
+        migrator_instance.migrate
+      end
+
+      def migrator_instance
+        @migrator_instance ||= ::ActiveRecord::Migrator.new(direction.to_sym, [migration])
       end
 
       def schema_migration
