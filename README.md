@@ -77,6 +77,7 @@ Add the following lines into your `config/initializer/` folder
 RailsAsyncMigrations.config do |config|
   # `:verbose` can be used of you want a full log of the execution
   config.mode = :quiet
+
   # when the migration is turned asynchronous
   # it watches over some specific `ActiveRecord` methods
   # by adding them to this array, you'll lock and turn those methods asynchronous
