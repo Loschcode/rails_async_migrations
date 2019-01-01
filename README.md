@@ -69,7 +69,7 @@ What is turned asynchronous is executed exactly the same way as a classical migr
 
 ## Configuration
 
-No configuration is needed to start using this library, but some options are given to adapt to your needs.
+**No configuration is needed to start using this library**, but some options are given to adapt to your needs.
 
 Add the following lines into your `config/initializer/` folder
 
