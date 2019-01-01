@@ -85,8 +85,6 @@ RailsAsyncMigrations.config do |config|
 end
 ```
 
-end
-
 ## Queue
 
 Each migration which is turned asynchronous follows each other, once one migration of the queue is ended without problem, it passes to the next one.
