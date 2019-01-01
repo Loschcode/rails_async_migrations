@@ -74,7 +74,6 @@ What is turned asynchronous is executed exactly the same way as a classical migr
 Add the following lines into your `config/initializer/` folder
 
 ```
-
 RailsAsyncMigrations.config do |config|
   # `:verbose` can be used of you want a full log of the execution
   config.mode = :quiet
@@ -84,7 +83,6 @@ RailsAsyncMigrations.config do |config|
   # by removing them you'll let them use the classical migration process
   config.locked_methods =  %i[change up down]
 end
-
 ```
 
 end
