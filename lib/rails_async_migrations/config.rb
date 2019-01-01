@@ -6,7 +6,7 @@ module RailsAsyncMigrations
 
     def initialize
       @locked_methods = %i[change up down]
-      @mode = :verbose # %i[verbose quiet]
+      @mode = :quiet # %i[verbose quiet]
     end
   end
 end

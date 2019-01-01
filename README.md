@@ -67,6 +67,27 @@ From now on, when you run this migration it'll simply run the normal queue, but 
 
 What is turned asynchronous is executed exactly the same way as a classical migration, which means you can use all keywords of the classic `ActiveRecord::Migration` such as `create_table`, `add_column`, etc.
 
+## Configuration
+
+No configuration is needed to start using this library, but some options are given to adapt to your needs.
+
+Add the following lines into your `config/initializer/` folder
+
+```
+RailsAsyncMigrations.config do |config|
+
+  # `:verbose` can be used of you want a full log of the execution
+  config.mode = :quiet
+
+  # when the migration is turned asynchronous
+  # it watches over some specific `ActiveRecord` methods
+  # by adding them to this array, you'll lock and turn those methods asynchronous
+  # by removing them you'll let them use the classical migration process
+  config.locked_methods =  %i[change up down]
+```
+
+end
+
 ## Queue
 
 Each migration which is turned asynchronous follows each other, once one migration of the queue is ended without problem, it passes to the next one.
