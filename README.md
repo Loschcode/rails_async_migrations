@@ -95,9 +95,9 @@ If your migration crashes, and block the rest of your asynchronous migrations bu
 
 The `version` value is always the same as the classic migrations ones.
 
-## Workers
+## Requirements
 
-For now, the system works slowly coupled with Sidekiq. If you use other technologies, please hit me up and I'll create additional adapters for you.
+⚠ For now, the workers are coupled with Sidekiq. If you use other technologies, please hit me up and I'll create additional adapters for you.
 
 ## Compatibility
 
