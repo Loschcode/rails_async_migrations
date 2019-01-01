@@ -84,6 +84,7 @@ RailsAsyncMigrations.config do |config|
   # by adding them to this array, you'll lock and turn those methods asynchronous
   # by removing them you'll let them use the classical migration process
   config.locked_methods =  %i[change up down]
+end
 ```
 
 end
