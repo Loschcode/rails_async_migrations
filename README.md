@@ -74,17 +74,17 @@ What is turned asynchronous is executed exactly the same way as a classical migr
 Add the following lines into your `config/initializer/` folder
 
 ```
-RailsAsyncMigrations.config do |config|
 
+RailsAsyncMigrations.config do |config|
   # `:verbose` can be used of you want a full log of the execution
   config.mode = :quiet
-
   # when the migration is turned asynchronous
   # it watches over some specific `ActiveRecord` methods
   # by adding them to this array, you'll lock and turn those methods asynchronous
   # by removing them you'll let them use the classical migration process
   config.locked_methods =  %i[change up down]
 end
+
 ```
 
 end
