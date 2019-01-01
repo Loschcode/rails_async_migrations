@@ -20,9 +20,8 @@ module RailsAsyncMigrations
       end
 
       def trigger_callback
-        if instance.class.method_defined? :trigger_callback
-          instance.send(:trigger_callback, method_name)
-        end
+        instance.send(:trigger_callback, method_name)
+      rescue NoMethodError
       end
     end
   end

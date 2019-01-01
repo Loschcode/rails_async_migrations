@@ -15,6 +15,7 @@ module RailsAsyncMigrations
           Tracer.new.verbose "Direction `#{direction}` not allowed."
           return
         end
+
         enqueue_asynchronous unless already_enqueued?
         check_queue
       end
