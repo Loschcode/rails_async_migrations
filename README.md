@@ -6,7 +6,7 @@
 
 This library was made with the intent to help small companies which are struggling to scale at technical level. Small projects don't need asynchronous migrations queues, and big companies build their own parallel systems when facing scaling problems, but what about medium sized companies with limited resources ?
 
-When a project grows, your database start to be heavy and changing the data through the deployment process can be very painful. There are numerous reasons you want this process to be [at least] partially asynchronous.
+When a project grows, your database starts to be heavy and changing the data through the deployment process can be very painful. There are numerous reasons you want this process to be [at least] partially asynchronous.
 
 Most people turn heavy data changes into `rake tasks` or split workers; there are two schools of thought about this.
 
