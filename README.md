@@ -8,7 +8,7 @@ This library was made with the intent to help small companies which are struggli
 
 When a project grows, your database start to be heavy and changing the data through the deployment process can be very painful. There are numerous reasons you want this process to be [at least] partially asynchronous.
 
-Most people turn heavy data changes into `rake tasks` or split workers ; there are two schools of thought about this.
+Most people turn heavy data changes into `rake tasks` or split workers; there are two schools of thought about this.
 
 1. Migrations should only mutate database structures and not its data, and if it's the case, it should be split and processed via other means.
 2. Migrations are everything which alter data one time, typically during a deployment of new code and structure.
@@ -91,7 +91,7 @@ You can also manually launch the queue check and fire by using:
 
 ## Failure handling
 
-If your migration crashes, and block the rest of your asynchronous migrations but you want to execute the rest anyway, you can change the code of the migration file and push it again so it passes, or simply remove / update as `state = done` the matching `async_schema_migrations` row.
+If your migration crashes, and blocks the rest of your asynchronous migrations but you want to execute the rest anyway, you can change the code of the migration file and push it again so it passes, or simply remove / update as `state = done` the matching `async_schema_migrations` row.
 
 The `version` value is always the same as the classic migrations ones.
 
@@ -105,7 +105,7 @@ The gem has been tested and is working with `ActiveRecord 5.2.2`, if you want it
 
 ## Development
 
-I created this library as my company was struggling in its deployment process. It lacks functionalities but this is a good starting point ; everything is easily extendable so don't hesitate to add your own needed methods to it.
+I created this library as my company was struggling in its deployment process. It lacks functionalities but this is a good starting point; everything is easily extendable so don't hesitate to add your own needed methods to it.
 
 You're more than welcome to open an issue with feature requests so I can work on improving this library.
 
