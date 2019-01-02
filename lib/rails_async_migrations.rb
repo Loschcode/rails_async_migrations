@@ -1,6 +1,7 @@
 require 'active_support'
 require 'active_record'
 require 'sidekiq'
+require 'delayed_job_active_record'
 
 require 'rails_async_migrations/connection/active_record'
 require 'rails_async_migrations/config'
