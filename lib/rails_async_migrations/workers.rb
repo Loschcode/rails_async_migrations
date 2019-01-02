@@ -1,6 +1,3 @@
-require 'rails_async_migrations/workers/sidekiq/check_queue_worker'
-require 'rails_async_migrations/workers/sidekiq/fire_migration_worker'
-
 # we check the state of the queue and launch run worker if needed
 module RailsAsyncMigrations
   class Workers
@@ -44,6 +41,10 @@ module RailsAsyncMigrations
     def ensure_worker_presence
       case workers_type
       when :sidekiq
+        require 'sidekiq'
+        require 'rails_async_migrations/workers/sidekiq/check_queue_worker'
+        require 'rails_async_migrations/workers/sidekiq/fire_migration_worker'
+
         unless defined? ::Sidekiq::Worker
           raise Error, 'Please install Sidekiq before to set it as worker adapter'
         end
