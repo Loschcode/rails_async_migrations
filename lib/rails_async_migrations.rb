@@ -1,6 +1,10 @@
 require 'active_support'
 require 'active_record'
 
+require 'sidekiq'
+require 'rails_async_migrations/workers/sidekiq/check_queue_worker'
+require 'rails_async_migrations/workers/sidekiq/fire_migration_worker'
+
 require 'rails_async_migrations/connection/active_record'
 require 'rails_async_migrations/config'
 require 'rails_async_migrations/migration'

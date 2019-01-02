@@ -9,7 +9,7 @@ module RailsAsyncMigrations
       ensure_worker_presence
     end
 
-    def perform(args = nil)
+    def perform(args = [])
       return unless ALLOWED.include? called_worker
       self.send called_worker, *args
     end
@@ -41,10 +41,6 @@ module RailsAsyncMigrations
     def ensure_worker_presence
       case workers_type
       when :sidekiq
-        require 'sidekiq'
-        require 'rails_async_migrations/workers/sidekiq/check_queue_worker'
-        require 'rails_async_migrations/workers/sidekiq/fire_migration_worker'
-
         unless defined? ::Sidekiq::Worker
           raise Error, 'Please install Sidekiq before to set it as worker adapter'
         end
