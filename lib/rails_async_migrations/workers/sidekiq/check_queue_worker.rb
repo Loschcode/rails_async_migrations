@@ -1,6 +1,6 @@
 # we check the state of the queue and launch run worker if needed
 module RailsAsyncMigrations
-  module Workers
+  class Workers
     module Sidekiq
       class CheckQueueWorker
         include ::Sidekiq::Worker

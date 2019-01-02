@@ -10,8 +10,7 @@ require 'rails_async_migrations/tracer'
 require 'rails_async_migrations/version'
 require 'rails_async_migrations/railtie' if defined?(Rails)
 require 'rails_async_migrations/models/async_schema_migration'
-require 'rails_async_migrations/workers/sidekiq/check_queue_worker'
-require 'rails_async_migrations/workers/sidekiq/fire_migration_worker'
+require 'rails_async_migrations/workers'
 
 module RailsAsyncMigrations
   class Error < StandardError; end

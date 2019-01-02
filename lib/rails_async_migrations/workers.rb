@@ -1,6 +1,9 @@
+require 'rails_async_migrations/workers/sidekiq/check_queue_worker'
+require 'rails_async_migrations/workers/sidekiq/fire_migration_worker'
+
 # we check the state of the queue and launch run worker if needed
 module RailsAsyncMigrations
-  module Workers
+  class Workers
     attr_reader :called_worker
 
     def initialize(called_worker)
