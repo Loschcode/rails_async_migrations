@@ -38,11 +38,11 @@ module RailsAsyncMigrations
       end
 
       def check_queue
-        RailsAsyncMigrations::Workers::CheckQueueWorker.perform_async
+        RailsAsyncMigrations::Workers::Sidekiq::CheckQueueWorker.perform_async
       end
 
       def active_record
-        @active_record ||= Adapters::ActiveRecord.new(direction)
+        @active_record ||= Connection::ActiveRecord.new(direction)
       end
 
       def direction

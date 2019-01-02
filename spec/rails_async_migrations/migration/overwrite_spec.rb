@@ -3,8 +3,12 @@ RSpec.describe RailsAsyncMigrations::Migration::Overwrite do
   let(:class_instance) { FakeMigration.new }
   let(:method_name) { :change }
 
+  before do
+    fake_version!
+  end
+
   context '#perform' do
     subject { instance.perform }
-    it { is_expected.to be_falsey }
+    it { is_expected.to be_truthy }
   end
 end

@@ -20,6 +20,13 @@ RSpec.configure do |config|
   )
   ActiveRecord::Schema.verbose = false
 
+  # Add additional requires below this line. Rails is not loaded until this point!
+  Dir['spec/support/**/*.rb'].each do |file|
+    load file
+  end
+
+  config.include UtilsHelpers
+
   load 'support/db/schema.rb'
   load 'support/db/migrate/2010010101010_fake_migration.rb'
   ActiveRecord::Migrator.migrations_paths << 'support/db/migrate'

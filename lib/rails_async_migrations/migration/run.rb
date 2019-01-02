@@ -24,7 +24,7 @@ module RailsAsyncMigrations
       private
 
       def migration_from(version)
-        Adapters::ActiveRecord.new(direction).migration_from version
+        Connection::ActiveRecord.new(direction).migration_from version
       end
 
       def run_migration

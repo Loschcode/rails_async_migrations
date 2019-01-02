@@ -4,9 +4,7 @@ RSpec.describe RailsAsyncMigrations::Mutators::TriggerCallback do
   let(:method_name) { :change }
 
   before do
-    allow_any_instance_of(
-      RailsAsyncMigrations::Adapters::ActiveRecord
-    ).to receive(:current_version).and_return('00000')
+    fake_version!
   end
 
   context '#perform' do

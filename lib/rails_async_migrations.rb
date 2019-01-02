@@ -2,7 +2,7 @@ require 'active_support'
 require 'active_record'
 require 'sidekiq'
 
-require 'rails_async_migrations/adapters/active_record'
+require 'rails_async_migrations/connection/active_record'
 require 'rails_async_migrations/config'
 require 'rails_async_migrations/migration'
 require 'rails_async_migrations/mutators'
@@ -10,8 +10,8 @@ require 'rails_async_migrations/tracer'
 require 'rails_async_migrations/version'
 require 'rails_async_migrations/railtie' if defined?(Rails)
 require 'rails_async_migrations/models/async_schema_migration'
-require 'rails_async_migrations/workers/check_queue_worker'
-require 'rails_async_migrations/workers/fire_migration_worker'
+require 'rails_async_migrations/workers/sidekiq/check_queue_worker'
+require 'rails_async_migrations/workers/sidekiq/fire_migration_worker'
 
 module RailsAsyncMigrations
   class Error < StandardError; end

@@ -1,15 +1,16 @@
-RSpec.describe RailsAsyncMigrations::Adapters::ActiveRecord do
+RSpec.describe RailsAsyncMigrations::Connection::ActiveRecord do
   let(:active_record_instance) { resource_class.new }
   let(:direction) { :up }
   let(:instance) { described_class.new(direction) }
 
   before do
+    fake_version!
     fake_migrate!
   end
 
   context '#current_version' do
     subject { instance.current_version }
-    it { is_expected.to be_falsey }
+    it { is_expected.to eq('00000') }
   end
 
   context '#current_migration' do
@@ -18,7 +19,7 @@ RSpec.describe RailsAsyncMigrations::Adapters::ActiveRecord do
   end
 
   context '#migration_from(version)' do
-    let(:version) { 000000000 }
+    let(:version) { '000000000' }
     subject { instance.migration_from(version) }
     it { is_expected.to be_falsey }
   end
@@ -32,11 +33,6 @@ RSpec.describe RailsAsyncMigrations::Adapters::ActiveRecord do
       it { is_expected.to be_falsey }
     end
   end
-end
-
-def fake_migrate!
-  load 'support/db/migrate/2010010101010_fake_migration.rb'
-  FakeMigration.new.change
 end
 
 # def fake_connection!

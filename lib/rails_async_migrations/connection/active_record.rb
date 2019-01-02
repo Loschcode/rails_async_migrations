@@ -1,5 +1,5 @@
 module RailsAsyncMigrations
-  module Adapters
+  module Connection
     class ActiveRecord
       attr_reader :current_direction
 
