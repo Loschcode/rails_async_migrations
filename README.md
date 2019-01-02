@@ -78,6 +78,9 @@ RailsAsyncMigrations.config do |config|
   # `:verbose` can be used if you want a full log of the execution
   config.mode = :quiet
 
+  # which kind of worker do you want to use for this library
+  config.workers = :sidekiq # or :delayed_job
+
   # when the migration is turned asynchronous
   # it watches over some specific `ActiveRecord` methods
   # by adding them to this array, you'll lock and turn those methods asynchronous
@@ -118,9 +121,16 @@ The `version` value is always the same as the classic migrations ones.
 
 ## Compatibility
 
-⚠ For now, the workers are coupled with Sidekiq. If you use other technologies, please hit me up and I'll create additional adapters for you.
+You can use this library through different adapters
 
-The gem has been tested and is working with `ActiveRecord 5.2.2`, if you want it compatible with earlier versions, please hit me up.
+| Type             | Version | Documentation                                 |
+| ---------------- | ------- | --------------------------------------------- |
+| **Sidekiq**      | 5.2.3   | https://github.com/collectiveidea/delayed_job |
+| **Delayed::Job** | 4.1.3   | https://github.com/mperham/sidekiq            |
+
+If you use other technologies to setup your workers, please hit me up and I'll create additional adapters for you.
+
+The gem has been tested and is working with `ActiveRecord 5.2.2`, if you notice abnormal behavior with other versions or want it compatible with earlier versions, please hit me up.
 
 ## Development
 
