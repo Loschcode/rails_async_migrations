@@ -9,6 +9,7 @@ module RailsAsyncMigrations
 
     def initialize(called_worker)
       @called_worker = called_worker # :check_queue, :fire_migration
+      ensure_worker_presence
     end
 
     def perform(args = nil)
@@ -23,7 +24,7 @@ module RailsAsyncMigrations
       when :sidekiq
         Workers::Sidekiq::CheckQueueWorker.perform_async(*args)
       when :delayed_job
-        Delayed::Job.enqueue Migration::CheckQueue.new
+        ::Delayed::Job.enqueue Migration::CheckQueue.new
       end
     end
 
@@ -32,12 +33,25 @@ module RailsAsyncMigrations
       when :sidekiq
         Workers::Sidekiq::FireMigrationWorker.perform_async(*args)
       when :delayed_job
-        Delayed::Job.enqueue Migration::FireMigration.new(*args)
+        ::Delayed::Job.enqueue Migration::FireMigration.new(*args)
       end
     end
 
     def workers_type
       RailsAsyncMigrations.config.workers
+    end
+
+    def ensure_worker_presence
+      case workers_type
+      when :sidekiq
+        unless defined? ::Sidekiq::Worker
+          raise Error, 'Please install Sidekiq before to set it as worker adapter'
+        end
+      when :delayed_job
+        unless defined? ::Delayed::Job
+          raise Error, 'Please install Delayed::Job before to set it as worker adapter'
+        end
+      end
     end
   end
 end
