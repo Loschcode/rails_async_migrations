@@ -38,7 +38,7 @@ module RailsAsyncMigrations
       end
 
       def check_queue
-        RailsAsyncMigrations::Workers::Sidekiq::CheckQueueWorker.perform_async
+        Workers.new(:check_queue).perform
       end
 
       def active_record

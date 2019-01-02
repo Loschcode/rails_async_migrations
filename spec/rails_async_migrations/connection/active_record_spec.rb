@@ -34,29 +34,3 @@ RSpec.describe RailsAsyncMigrations::Connection::ActiveRecord do
     end
   end
 end
-
-# def fake_connection!
-#   allow(::ActiveRecord::Base).to receive(:connection).and_return(FakeConnection.new)
-# end
-
-#  class FakeConnection
-#   def migration_context
-#     FakeMigrationContext.new
-#   end
-#  end
-
-#  class FakeMigrationContext
-#   def migrations
-#     [FakeProxy.new]
-#   end
-
-#   def get_all_versions
-#     [FakeProxy.new]
-#   end
-#  end
-
-#  class FakeProxy
-#   def version
-#     000000000
-#   end
-#  end

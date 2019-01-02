@@ -20,7 +20,7 @@ module RailsAsyncMigrations
 
       def fire_migration
         Tracer.new.verbose "Migration `#{current_migration.id}` will now be processed"
-        RailsAsyncMigrations::Workers::FireMigrationWorker.perform_async(current_migration.id)
+        Workers.new(:fire_migration).perform(current_migration.id)
       end
 
       def pending!

@@ -1,6 +1,6 @@
 namespace :rails_async_migrations do
   desc 'Check our current asynchronous queue and fire migrations if possible'
   task :check_queue do
-    RailsAsyncMigrations::Workers::Sidekiq::CheckQueueWorker.perform_async
+    RailsAsyncMigrations::Workers.new(:check_queue).perform
   end
 end

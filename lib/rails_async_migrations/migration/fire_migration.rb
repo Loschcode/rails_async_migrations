@@ -21,7 +21,7 @@ module RailsAsyncMigrations
       private
 
       def check_queue
-        Workers::CheckQueueWorker.perform_async
+        Workers.new(:check_queue).perform
       end
 
       def run_migration
