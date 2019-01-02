@@ -82,6 +82,8 @@ RailsAsyncMigrations.config do |config|
   # it watches over some specific `ActiveRecord` methods
   # by adding them to this array, you'll lock and turn those methods asynchronous
   # by removing them you'll let them use the classical migration process
+  # for example, if you set the `locked_methods` to %i[async] the migration will be processed normally
+  # but the content of the `#async` method will be taken away and executed within the asynchronous queue
   config.locked_methods =  %i[change up down]
 end
 ```
@@ -114,11 +116,9 @@ If your migration crashes, and blocks the rest of your asynchronous migrations b
 
 The `version` value is always the same as the classic migrations ones.
 
-## Requirements
+## Compatibility
 
 ⚠ For now, the workers are coupled with Sidekiq. If you use other technologies, please hit me up and I'll create additional adapters for you.
-
-## Compatibility
 
 The gem has been tested and is working with `ActiveRecord 5.2.2`, if you want it compatible with earlier versions, please hit me up.
 
