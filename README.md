@@ -116,7 +116,7 @@ You can also manually launch the queue check and fire by using:
 
 ## Failure handling
 
-If your migration crashes, and blocks the rest of your asynchronous migrations but you want to execute the rest anyway, you can change the code of the migration file and push it again so it passes, or simply remove / update as `state = done` the matching `async_schema_migrations` row.
+If your migration crashes, and blocks the rest of your asynchronous migrations but you want to execute them anyway, you can change the code of the migration file and push it again so it passes, or simply remove / update as `state = done` the matching `async_schema_migrations` row.
 
 The `version` value is always the same as the classic migrations ones.
 
