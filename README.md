@@ -75,11 +75,12 @@ Add the following lines into your `config/initializer/` folder
 
 ```
 RailsAsyncMigrations.config do |config|
-  # `:verbose` can be used if you want a full log of the execution
+  # :verbose can be used if you want a full log of the execution
   config.mode = :quiet
 
   # which kind of worker do you want to use for this library
-  config.workers = :sidekiq # or :delayed_job
+  # for now you have two options: :delayed_job or :sidekiq
+  config.workers = :sidekiq
 
   # when the migration is turned asynchronous
   # it watches over some specific `ActiveRecord` methods
