@@ -7,9 +7,9 @@ module RailsAsyncMigrations
 
         sidekiq_options queue: :default
 
-        def perform(async_schema_migration_id)
+        def perform(migration_id)
           Migration::FireMigration.new(
-            AsyncSchemaMigration.find(async_schema_migration_id)
+            migration_id
           ).perform
         end
       end

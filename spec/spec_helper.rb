@@ -5,6 +5,7 @@ require 'rails_async_migrations'
 require 'logger'
 require 'database_cleaner'
 require 'rspec-sidekiq'
+require 'delayed_job_active_record'
 
 RSpec.configure do |config|
   config.example_status_persistence_file_path = '.rspec_status'
@@ -31,12 +32,17 @@ RSpec.configure do |config|
   load 'support/db/migrate/2010010101010_fake_migration.rb'
   ActiveRecord::Migrator.migrations_paths << 'support/db/migrate'
 
+
   DatabaseCleaner.strategy = :truncation
 
+
   config.before :each do
+    Delayed::Worker.delay_jobs = false
     DatabaseCleaner.start
   end
+
   config.after :each do
+    Delayed::Worker.delay_jobs = true
     DatabaseCleaner.clean
   end
 end

@@ -1,5 +1,5 @@
 RSpec.describe RailsAsyncMigrations::Migration::FireMigration do
-  let(:instance) { described_class.new(migration) }
+  let(:instance) { described_class.new(migration.id) }
   let(:migration) do
     AsyncSchemaMigration.create!(
       version: '00000',

@@ -4,7 +4,7 @@ RSpec.describe RailsAsyncMigrations::Workers do
   let(:args) { [] }
   let(:async_schema_migration) do
     AsyncSchemaMigration.create!(
-      version: '0000',
+      version: '00000',
       direction: 'up',
       state: 'created'
     )
@@ -12,14 +12,33 @@ RSpec.describe RailsAsyncMigrations::Workers do
 
   subject { instance.perform(args) }
 
-  context 'with :check_queue' do
-    it { is_expected.to be_truthy }
+  context 'through delayed_job' do
+    before do
+      RailsAsyncMigrations.config.workers = :delayed_job
+    end
+
+    context 'with :check_queue' do
+      it { is_expected.to be_truthy }
+    end
+
+    context 'with :fire_migration' do
+      let(:called_worker) { :fire_migration }
+      let(:args) { [async_schema_migration.id] }
+
+      it { expect { subject }.to raise_error(RailsAsyncMigrations::Error) }
+    end
   end
 
-  context 'with :fire_migration' do
-    let(:called_worker) { :fire_migration }
-    let(:args) { [async_schema_migration.id] }
+  context 'through sidekiq' do
+    context 'with :check_queue' do
+      it { is_expected.to be_truthy }
+    end
 
-    it { is_expected.to be_truthy }
+    context 'with :fire_migration' do
+      let(:called_worker) { :fire_migration }
+      let(:args) { [async_schema_migration.id] }
+
+      it { expect { subject }.to raise_error(RailsAsyncMigrations::Error) }
+    end
   end
 end

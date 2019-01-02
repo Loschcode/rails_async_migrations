@@ -4,8 +4,8 @@ module RailsAsyncMigrations
     class FireMigration
       attr_reader :migration
 
-      def initialize(migration)
-        @migration = migration
+      def initialize(migration_id)
+        @migration = AsyncSchemaMigration.find(migration_id)
       end
 
       def perform
