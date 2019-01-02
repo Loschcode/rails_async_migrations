@@ -116,11 +116,9 @@ If your migration crashes, and blocks the rest of your asynchronous migrations b
 
 The `version` value is always the same as the classic migrations ones.
 
-## Requirements
+## Compatibility
 
 ⚠ For now, the workers are coupled with Sidekiq. If you use other technologies, please hit me up and I'll create additional adapters for you.
-
-## Compatibility
 
 The gem has been tested and is working with `ActiveRecord 5.2.2`, if you want it compatible with earlier versions, please hit me up.
 
