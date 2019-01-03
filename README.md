@@ -15,6 +15,19 @@ Most people turn heavy data changes into `rake tasks` or split workers; there ar
 
 Turning data changes into a `rake task` can be a good idea, and it's ideal to test it out too, but sometimes you need this **fat ass loop** of **>1,000,000 records** which will be run **once, and only once** to be run fast and without locking down the deployment process itself; making a `rake task` for that is overkill. After all, it will only be used once and within a specific structure / data context. This gem is here to answer this need.
 
+## Requirements
+
+You can use this library through different adapters
+
+| Type             | Version | Documentation                                 |
+| ---------------- | ------- | --------------------------------------------- |
+| **Sidekiq**      | 5.2.3   | https://github.com/mperham/sidekiq            |
+| **Delayed::Job** | 4.1.3   | https://github.com/collectiveidea/delayed_job |
+
+If you use other technologies to setup your workers, please hit me up and I'll create additional adapters for you.
+
+The gem has been tested and is working with `ActiveRecord 5.2.2`, if you notice abnormal behavior with other versions or want it compatible with earlier versions, please hit me up.
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -123,19 +136,6 @@ If your migration crashes, and blocks the rest of your queue but you want to exe
 - Update the matching row with `state = done`
 
 To find the matching migration, be aware the `version` value is always the same as the classic migrations ones, so it's pretty easy to find things around.
-
-## Compatibility
-
-You can use this library through different adapters
-
-| Type             | Version | Documentation                                 |
-| ---------------- | ------- | --------------------------------------------- |
-| **Sidekiq**      | 5.2.3   | https://github.com/mperham/sidekiq            |
-| **Delayed::Job** | 4.1.3   | https://github.com/collectiveidea/delayed_job |
-
-If you use other technologies to setup your workers, please hit me up and I'll create additional adapters for you.
-
-The gem has been tested and is working with `ActiveRecord 5.2.2`, if you notice abnormal behavior with other versions or want it compatible with earlier versions, please hit me up.
 
 ## Development
 
