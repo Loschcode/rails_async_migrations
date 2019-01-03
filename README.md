@@ -19,10 +19,10 @@ Turning data changes into a `rake task` can be a good idea, and it's ideal to te
 
 You can use this library through different background processing technologies
 
-| Type             | Version | Documentation                                 |
-| ---------------- | ------- | --------------------------------------------- |
-| **Sidekiq**      | 5.2.3   | https://github.com/mperham/sidekiq            |
-| **Delayed::Job** | 4.1.3   | https://github.com/collectiveidea/delayed_job |
+| Type             | Version | Documentation                                 | Default |
+| ---------------- | ------- | --------------------------------------------- | ------- |
+| **Sidekiq**      | 5.2.3   | https://github.com/mperham/sidekiq            | *       |
+| **Delayed::Job** | 4.1.3   | https://github.com/collectiveidea/delayed_job |         |
 
 If you use other libraries to setup your workers, please hit me up and I'll create additional adapters for you.
 
