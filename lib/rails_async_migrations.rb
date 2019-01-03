@@ -1,9 +1,12 @@
 require 'active_support'
 require 'active_record'
 
-require 'sidekiq'
-require 'rails_async_migrations/workers/sidekiq/check_queue_worker'
-require 'rails_async_migrations/workers/sidekiq/fire_migration_worker'
+begin
+  require 'sidekiq'
+  require 'rails_async_migrations/workers/sidekiq/check_queue_worker'
+  require 'rails_async_migrations/workers/sidekiq/fire_migration_worker'
+rescue LoadError
+end
 
 require 'rails_async_migrations/connection/active_record'
 require 'rails_async_migrations/config'
