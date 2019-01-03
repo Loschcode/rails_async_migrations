@@ -21,8 +21,8 @@ You can use this library through different background processing technologies
 
 | Type             | Version | Documentation                                 | Default |
 | ---------------- | ------- | --------------------------------------------- | ------- |
-| **Sidekiq**      | 5.2.3   | https://github.com/mperham/sidekiq            | *       |
-| **Delayed::Job** | 4.1.3   | https://github.com/collectiveidea/delayed_job |         |
+| **Sidekiq**      | 5.2.3   | https://github.com/mperham/sidekiq            | YES     |
+| **Delayed::Job** | 4.1.3   | https://github.com/collectiveidea/delayed_job | NO      |
 
 If you use other libraries to setup your workers, please hit me up and I'll create additional adapters for you.
 
