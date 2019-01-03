@@ -24,7 +24,7 @@ You can use this library through different background processing technologies
 | **Sidekiq**      | 5.2.3   | https://github.com/mperham/sidekiq            |
 | **Delayed::Job** | 4.1.3   | https://github.com/collectiveidea/delayed_job |
 
-If you use other technologies to setup your workers, please hit me up and I'll create additional adapters for you.
+If you use other libraries to setup your workers, please hit me up and I'll create additional adapters for you.
 
 The gem has been tested and is working with `ActiveRecord 5.2.2`, if you notice abnormal behavior with other versions or want it compatible with earlier versions, please hit me up.
 
