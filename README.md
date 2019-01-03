@@ -17,7 +17,7 @@ Turning data changes into a `rake task` can be a good idea, and it's ideal to te
 
 ## Requirements
 
-You can use this library through different adapters
+You can use this library through different background processing technologies
 
 | Type             | Version | Documentation                                 |
 | ---------------- | ------- | --------------------------------------------- |
