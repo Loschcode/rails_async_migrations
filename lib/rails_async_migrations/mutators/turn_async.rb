@@ -15,6 +15,7 @@ module RailsAsyncMigrations
       private
 
       def alter_migration
+        Tracer.new.verbose "#{migration_class} is now asynchronous"
         migration_class.include RailsAsyncMigrations::Migration
       end
     end
