@@ -91,7 +91,7 @@ RailsAsyncMigrations.config do |config|
   # :verbose can be used if you want a full log of the execution
   config.mode = :quiet
 
-  # which kind of worker do you want to use for this library
+  # which adapter worker you want to use for this library
   # for now you have two options: :delayed_job or :sidekiq
   config.workers = :sidekiq
 
