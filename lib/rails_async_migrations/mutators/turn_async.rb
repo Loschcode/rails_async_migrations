@@ -1,10 +1,10 @@
 module RailsAsyncMigrations
   module Mutators
     class TurnAsync < Base
-      attr_reader :instance
+      attr_reader :migration_class
 
-      def initialize(instance)
-        @instance = instance
+      def initialize(migration_class)
+        @migration_class = migration_class
       end
 
       def perform

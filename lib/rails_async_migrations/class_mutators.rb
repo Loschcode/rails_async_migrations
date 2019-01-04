@@ -6,19 +6,21 @@ require 'rails_async_migrations/mutators/trigger_callback'
 # the `self` represents the class being ran so we have to be careful as not to conflict
 # with the original ActiveRecord names
 module RailsAsyncMigrations
-  module Mutators
-    private
-
+  module ClassMutators
     def turn_async
-      TurnAsync.new(self).perform
-    end
-
-    # # the following methods are internal mechanics
-    # # do not overwrite those methods if you don't know
-    # # exactly what you're doing
-
-    def trigger_callback(method)
-      TriggerCallback.new(self, method).perform
+      Mutators::TurnAsync.new(self).perform
     end
   end
 end
+
+    # def self.descendants
+    #   ObjectSpace.each_object(Class).select do
+    #     |current| current < self
+    #   end
+    # end
+      # descendants = self.class.descendants
+      # descendants.delete_at descendants.index(ActiveRecord::Migration::Current)
+      # real_self = descendants.last
+
+      # puts "REAL SELF IS #{real_self}"
+      # 

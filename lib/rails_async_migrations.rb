@@ -11,7 +11,8 @@ end
 require 'rails_async_migrations/connection/active_record'
 require 'rails_async_migrations/config'
 require 'rails_async_migrations/migration'
-require 'rails_async_migrations/mutators'
+require 'rails_async_migrations/class_mutators'
+require 'rails_async_migrations/instance_mutators'
 require 'rails_async_migrations/tracer'
 require 'rails_async_migrations/version'
 require 'rails_async_migrations/railtie' if defined?(Rails)
@@ -38,5 +39,6 @@ module RailsAsyncMigrations
 end
 
 ActiveSupport.on_load(:active_record) do
-  ActiveRecord::Migration.prepend RailsAsyncMigrations::Mutators
+  ActiveRecord::Migration.extend RailsAsyncMigrations::ClassMutators
+  ActiveRecord::Migration.include RailsAsyncMigrations::InstanceMutators
 end
