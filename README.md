@@ -15,10 +15,6 @@ Most people turn heavy data changes into `rake tasks` or split workers; there ar
 
 Turning data changes into a `rake task` can be a good idea, and it's ideal to test it out too, but sometimes you need this **fat ass loop** of **>1,000,000 records** which will be run **once, and only once** to be run fast and without locking down the deployment process itself; making a `rake task` for that is overkill. After all, it will only be used once and within a specific structure / data context. This gem is here to answer this need.
 
-## Getting started
-
-If you want to see a quick example of use from scratch, I've written an article on the matter: [How to turn my ActiveRecord migrations asynchronous ?](https://medium.com/@LoschCode/how-to-turn-my-activerecord-migrations-asynchronous-c160b599f38)
-
 ## Requirements
 
 You can use this library through different background processing technologies
@@ -157,6 +153,10 @@ You're more than welcome to open an issue with feature requests so I can work on
 ## Credits
 
 This project and its idea was inspired by [Kir Shatrov article](https://kirshatrov.com/2018/04/01/async-migrations/) on the matter, it's worth a look!
+
+## Additional readings
+
+- [How to turn my ActiveRecord migrations asynchronous ?](https://medium.com/@LoschCode/how-to-turn-my-activerecord-migrations-asynchronous-c160b599f38)
 
 ## License
 
