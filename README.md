@@ -94,14 +94,6 @@ RailsAsyncMigrations.config do |config|
   # which adapter worker you want to use for this library
   # for now you have two options: :delayed_job or :sidekiq
   config.workers = :sidekiq
-
-  # when the migration is turned asynchronous
-  # it watches over some specific `ActiveRecord` methods
-  # by adding them to this array, you'll lock and turn those methods asynchronous
-  # by removing them you'll let them use the classical migration process
-  # for example, if you set the `locked_methods` to %i[async] the migration will be processed normally
-  # but the content of the `#async` method will be taken away and executed within the asynchronous queue
-  config.locked_methods =  %i[change up down]
 end
 ```
 
@@ -111,11 +103,14 @@ Each migration which is turned asynchronous follows each other, once one migrati
 
 If it fails, the error will be raised within the worker so it retries until it eventually works, or until it's considered dead. None of the further asynchronous migrations will be run until you fix the failed one, which is a good protection for data consistency.
 
+![RailsAsyncMigrations Schema](https://cdn-images-1.medium.com/max/1600/1*e1MElsR3B5rItwwVQkBYCw.png "RailsAsyncMigrations Schema")
+
+
 You can also manually launch the queue check and fire by using:
 
     $ rake rails_async_migrations:check_queue
 
-**For now, there is no rollback mechanism authorized, even if the source code is ready for it, it complexifies the build up logic and may not be needed in asynchronous cases.**
+**For now, there is no rollback mechanism authorized. It means if you rollback the asynchronous migrations will be simply ignored. Handling multiple directions complexifies the build up logic and may not be needed in asynchronous cases.**
 
 ## States
 
