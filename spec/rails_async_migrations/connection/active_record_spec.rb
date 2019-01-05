@@ -4,6 +4,7 @@ RSpec.describe RailsAsyncMigrations::Connection::ActiveRecord do
   let(:instance) { described_class.new(direction) }
 
   before do
+    fake_migration_proxy!
     fake_version!
     fake_migrate!
   end
@@ -15,13 +16,13 @@ RSpec.describe RailsAsyncMigrations::Connection::ActiveRecord do
 
   context '#current_migration' do
     subject { instance.current_migration }
-    it { is_expected.to be_falsey }
+    it { is_expected.to be_instance_of(FakeMigrationProxy) }
   end
 
   context '#migration_from(version)' do
     let(:version) { '000000000' }
     subject { instance.migration_from(version) }
-    it { is_expected.to be_falsey }
+    it { is_expected.to be_instance_of(FakeMigrationProxy) }
   end
 
   context '#allowed_direction?' do

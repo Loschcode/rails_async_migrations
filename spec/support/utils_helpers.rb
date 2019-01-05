@@ -1,4 +1,10 @@
 module UtilsHelpers
+  def config_worker_as(worker)
+    RailsAsyncMigrations.config do |config|
+      config.workers = worker
+    end
+  end
+
   def fake_version!
     allow_any_instance_of(
       RailsAsyncMigrations::Connection::ActiveRecord
@@ -9,6 +15,41 @@ module UtilsHelpers
     load 'support/db/migrate/2010010101010_fake_migration.rb'
     FakeMigration.new.change
   end
+
+  def fake_migration_proxy!
+    allow_any_instance_of(
+      RailsAsyncMigrations::Connection::ActiveRecord
+    ).to receive(:migration_from).and_return(
+      FakeMigrationProxy.new
+    )
+  end
+end
+
+class FakeMigrationProxy
+  def disable_ddl_transaction
+    true
+  end
+
+  def migrate(direction)
+    true
+  end
+
+  def name
+    'FakeMigration'
+  end
+
+  def version
+    '2010010101010'
+  end
+
+  def filename
+    'db/migrate/2010010101010_fake_migration.rb'
+  end
+
+  def scope
+    ''
+  end
+end
 
   # def fake_connection!
   #   allow(::ActiveRecord::Base).to receive(:connection).and_return(FakeConnection.new)
@@ -35,4 +76,3 @@ module UtilsHelpers
   #     000000000
   #   end
   #  end
-end

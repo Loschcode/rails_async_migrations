@@ -4,11 +4,21 @@ RSpec.describe RailsAsyncMigrations::Migration::Overwrite do
   let(:method_name) { :change }
 
   before do
+    fake_migration_proxy!
     fake_version!
+    config_worker_as :delayed_job
   end
 
   context '#perform' do
     subject { instance.perform }
-    it { is_expected.to be_truthy }
+    it { is_expected.to be_instance_of(Delayed::Backend::ActiveRecord::Job) }
+
+    context 'with sidekiq' do
+      before do
+        config_worker_as :sidekiq
+      end
+      
+      it { is_expected.to be_instance_of(String) }
+    end
   end
 end

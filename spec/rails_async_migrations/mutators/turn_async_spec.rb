@@ -1,6 +1,6 @@
 RSpec.describe RailsAsyncMigrations::Mutators::TurnAsync do
-  let(:instance) { described_class.new(class_instance) }
-  let(:class_instance) { FakeMigration.new }
+  let(:instance) { described_class.new(migration_class) }
+  let(:migration_class) { FakeMigration }
 
   context '#perform' do
     subject { instance.perform }

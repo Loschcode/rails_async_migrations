@@ -4,6 +4,7 @@ RSpec.describe RailsAsyncMigrations::Mutators::TriggerCallback do
   let(:method_name) { :change }
 
   before do
+    fake_migration_proxy!
     fake_version!
   end
 
