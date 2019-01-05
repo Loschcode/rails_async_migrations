@@ -6,8 +6,8 @@ module RailsAsyncMigrations
 
     def initialize
       @locked_methods = %i[change up down]
-      @mode = :quiet # verbose, quiet
-      @workers = :sidekiq # delayed_job, sidekiq
+      @mode = :quiet # :verbose, :quiet
+      @workers = :delayed_job # :sidekiq
     end
   end
 end
