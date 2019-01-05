@@ -14,7 +14,7 @@ RSpec.describe RailsAsyncMigrations::Workers do
 
   context 'through delayed_job' do
     before do
-      RailsAsyncMigrations.config.workers = :delayed_job
+      config_worker_as :delayed_job
     end
 
     context 'with :check_queue' do
