@@ -103,7 +103,7 @@ Each migration which is turned asynchronous follows each other, once one migrati
 
 If it fails, the error will be raised within the worker so it retries until it eventually works, or until it's considered dead. None of the further asynchronous migrations will be run until you fix the failed one, which is a good protection for data consistency.
 
-![RailsAsyncMigrations Schema](https://cdn-images-1.medium.com/max/1600/1*e1MElsR3B5rItwwVQkBYCw.png "RailsAsyncMigrations Schema")
+![RailsAsyncMigrations Schema](https://cdn-images-1.medium.com/max/1600/1*VklEFF8IWnmMI6-Cq20nVA.png "RailsAsyncMigrations Schema")
 
 
 You can also manually launch the queue check and fire by using:
