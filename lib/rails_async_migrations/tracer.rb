@@ -7,7 +7,7 @@ module RailsAsyncMigrations
 
     def verbose(text)
       return unless verbose?
-      puts text
+      puts "[VERBOSE] #{text}"
     end
 
     private
