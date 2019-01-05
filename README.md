@@ -154,7 +154,7 @@ You're more than welcome to open an issue with feature requests so I can work on
 
 This project and its idea was inspired by [Kir Shatrov article](https://kirshatrov.com/2018/04/01/async-migrations/) on the matter, it's worth a look!
 
-## Additional readings
+## Articles
 
 [How to turn my ActiveRecord migrations asynchronous ?](https://medium.com/@LoschCode/how-to-turn-my-activerecord-migrations-asynchronous-c160b599f38)
 
