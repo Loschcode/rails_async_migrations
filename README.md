@@ -96,11 +96,10 @@ RailsAsyncMigrations.config do |config|
   config.workers = :sidekiq
 
   # when the migration is turned asynchronous
-  # it watches over some specific `ActiveRecord` methods
+  # it watches over some specific ActiveRecord methods
   # by adding them to this array, you'll lock and turn those methods asynchronous
   # by removing them you'll let them use the classical migration process
-  # for example, if you set the `locked_methods` to %i[async] the migration will be processed normally
-  # but the content of the `#async` method will be taken away and executed within the asynchronous queue
+  # the methods present in this array must match with what ActiveRecord can run by itself
   config.locked_methods =  %i[change up down]
 end
 ```
