@@ -156,7 +156,7 @@ This project and its idea was inspired by [Kir Shatrov article](https://kirshatr
 
 ## Additional readings
 
-- [How to turn my ActiveRecord migrations asynchronous ?](https://medium.com/@LoschCode/how-to-turn-my-activerecord-migrations-asynchronous-c160b599f38)
+[How to turn my ActiveRecord migrations asynchronous ?](https://medium.com/@LoschCode/how-to-turn-my-activerecord-migrations-asynchronous-c160b599f38)
 
 ## License
 
