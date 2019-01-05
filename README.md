@@ -94,13 +94,6 @@ RailsAsyncMigrations.config do |config|
   # which adapter worker you want to use for this library
   # for now you have two options: :delayed_job or :sidekiq
   config.workers = :sidekiq
-
-  # when the migration is turned asynchronous
-  # it watches over some specific ActiveRecord methods
-  # by adding them to this array, you'll lock and turn those methods asynchronous
-  # by removing them you'll let them use the classical migration process
-  # the methods present in this array must match with what ActiveRecord can run by itself
-  config.locked_methods =  %i[change up down]
 end
 ```
 
