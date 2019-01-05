@@ -161,5 +161,3 @@ This project and its idea was inspired by [Kir Shatrov article](https://kirshatr
 ## License
 
 MIT License.
-
-## Changelog
