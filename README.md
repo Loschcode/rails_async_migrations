@@ -79,16 +79,16 @@ class Test < ActiveRecord::Migration[5.2]
   turn_async
 
   def change
-    create_table 'tests' do |t|
-      t.string :test
-    end
+    # data update logic you would put into a worker here
   end
 end
 ```
 
 From now on, when you run this migration it'll simply run the normal queue, but the content of `#change` will be taken away and later on executed into an asynchronous queue.
 
-What is turned asynchronous is executed exactly the same way as a classical migration, which means you can use all keywords of the classic `ActiveRecord::Migration` such as `create_table`, `add_column`, etc.
+What is turned asynchronous is executed exactly the same way as a classical migration, which means you can use all keywords of the classic `ActiveRecord::Migration` such as `create_table`, `add_column`, ...
+
+**It does not mean you should use them like you would in a synchronous migration.** To avoid data inconsistency, be careful about idempotency which's a natural side effect of using workers; add up conditions to make it reliable.
 
 ## Configuration
 
