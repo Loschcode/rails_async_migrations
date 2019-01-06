@@ -15,6 +15,16 @@ Most people turn heavy data changes into `rake tasks` or split workers; there ar
 
 Turning data changes into a `rake task` can be a good idea, and it's ideal to test it out too, but sometimes you need this **fat ass loop** of **>1,000,000 records** which will be run **once, and only once** to be run fast and without locking down the deployment process itself; making a `rake task` for that is overkill. After all, it will only be used once and within a specific structure / data context. This gem is here to answer this need.
 
+## Warning
+
+Migrating your data isn't easy and this gem isn't some magical technology. Putting some of your migration logic into a parallel asynchronous queue has consequences. Be careful about what you turn asynchronous:
+
+- Does it have any relation with what's run synchronously ?
+- Should I configure my workers to repeat the migration, or kill it after one attempt ?
+- Should I use ActiveRecord functionalities or use it without ?
+
+This is all up to you, but be aware this solves some problems, but needs you to think of the different strategies you should use it in, depending your project.
+
 ## Requirements
 
 You can use this library through different background processing technologies
