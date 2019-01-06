@@ -23,7 +23,7 @@ Migrating your data isn't easy and this gem isn't some magical technology. Putti
 - Should I configure my workers to repeat the migration, or kill it after one attempt ?
 - Should I use ActiveRecord functionalities or use it without ?
 
-This is all up to you, but be aware this solves some problems, but needs you to think of the different strategies you should use it in, depending your project.
+This is all up to you, but be aware this solves some problems, but makes you think of the different strategies you should adopt, depending your project.
 
 ## Requirements
 
