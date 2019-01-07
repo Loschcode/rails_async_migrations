@@ -15,7 +15,7 @@ Most people turn heavy data changes into `rake tasks` or split workers; there ar
 
 Turning data changes into a `rake task` can be a good idea, and it's ideal to test it out too, but sometimes you need this **fat ass loop** of **>10,000,000 records** which will be run **once, and only once** with complicated conditions to be run fast and without locking down the deployment process itself; making a `rake task` for that is overkill. After all, it will only be used once and within a specific structure / data context. This gem is here to answer this need.
 
-Some would argue there's also `rake db:seed` for that, which I agree with. The advantage over this methodology is to be able to split in different steps the updating process and have more flow control. By using this gem you can monitor the different completed changes while they are being run.
+Some would argue there's also `rake db:seed` for that, which I agree with. The advantage over this methodology is to be able to split in different steps the updating process and have more flow control. By using this gem you can monitor the different completed changes while they are being run. Seeding data in term of flow process isn't so different from migrating a database structure.
 
 ## Warning
 
