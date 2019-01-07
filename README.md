@@ -24,7 +24,7 @@ Migrating your data isn't easy and this gem isn't some magical technology. Putti
 - Does it have any relation with what's run synchronously ?
 - Should I configure my workers to repeat the migration, or kill it after one attempt ?
 - Is there a risk of crash of my synchronous migration ? If so, should I let the asynchronous being spawned before safety is ensured ?
-- Should I use ActiveRecord::Migration functionalities or use it in parallel to keep a safety net on worker idempotency ?
+- Should I use ActiveRecord::Migration functionalities (especially DDL transactions) or use it in parallel to keep a safety net on worker idempotency ?
 
 This is all up to you, but be aware this solves some problems, but makes you think of the different strategies you should adopt, depending your project.
 
