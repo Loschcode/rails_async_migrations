@@ -11,13 +11,13 @@ module RailsAsyncMigrations
       end
 
       def perform
-        lock_and_overwrite
+        take_and_overwrite
       end
 
       private
 
-      def lock_and_overwrite
-        Lock.new(resource_class, method_name).perform
+      def take_and_overwrite
+        Take.new(resource_class, method_name).perform
       end
     end
   end

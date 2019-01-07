@@ -1,6 +1,6 @@
 module RailsAsyncMigrations
   module Migration
-    class Unlock
+    class Give
       attr_reader :resource_class, :method_name
 
       def initialize(resource_class, method_name)
@@ -16,7 +16,7 @@ module RailsAsyncMigrations
 
       def restore_original_method
         if valid?
-          Lock.new(resource_class, method_name).suspend_lock do
+          Take.new(resource_class, method_name).suspend_take do
             resource_class.define_method(method_name, &method_clone)
           end
         end

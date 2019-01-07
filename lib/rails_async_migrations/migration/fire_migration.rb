@@ -32,7 +32,7 @@ module RailsAsyncMigrations
       end
 
       def done?
-        if migration.state == 'done'
+        if migration.reload.state == 'done'
           Tracer.new.verbose "Migration #{migration.id} is already `done`, cancelling fire"
           return true
         end
@@ -45,6 +45,7 @@ module RailsAsyncMigrations
       def done!
         migration.update! state: 'done'
         Tracer.new.verbose "Migration #{migration.id} was correctly processed"
+        migration.reload
       end
 
       def failed_with!(error)

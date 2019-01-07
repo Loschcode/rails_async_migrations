@@ -1,9 +1,9 @@
-# locks any class methods depending on a configuration list
+# takes any class methods depending on a configuration list
 # this allow us to ignore migration without making
 # a parallel pipeline system
 module RailsAsyncMigrations
   module Migration
-    class Lock
+    class Take
       attr_reader :resource_class, :method_name
 
       def initialize(resource_class, method_name)
@@ -12,26 +12,26 @@ module RailsAsyncMigrations
       end
 
       def perform
-        return false unless locked_method?
-        return false if unlocked?
+        return false unless taken_method?
+        return false if given?
 
         preserve_method_logics
 
-        suspend_lock do
+        suspend_take do
           overwrite_method
         end
       end
 
-      def suspend_lock(&block)
-        unlock
+      def suspend_take(&block)
+        give
         yield if block_given?
-        lock
+        take
       end
 
       private
 
-      def unlocked?
-        locked == false
+      def given?
+        taken == false
       end
 
       def clone_method_name
@@ -56,28 +56,28 @@ module RailsAsyncMigrations
         end
       end
 
-      def lockable?
-        unlocked? && locked_method?
+      def takeable?
+        given? && taken_method?
       end
 
-      def locked_method?
-        RailsAsyncMigrations.config.locked_methods.include? method_name
+      def taken_method?
+        RailsAsyncMigrations.config.taken_methods.include? method_name
       end
 
-      def lock
-        self.locked = true
+      def take
+        self.taken = true
       end
 
-      def unlock
-        self.locked = false
+      def give
+        self.taken = false
       end
 
-      def locked=(value)
-        resource_class.instance_variable_set(:@locked, value)
+      def taken=(value)
+        resource_class.instance_variable_set(:@taken, value)
       end
 
-      def locked
-        resource_class.instance_variable_get(:@locked)
+      def taken
+        resource_class.instance_variable_get(:@taken)
       end
     end
   end

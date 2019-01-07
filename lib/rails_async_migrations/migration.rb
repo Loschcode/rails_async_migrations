@@ -1,13 +1,13 @@
 require 'rails_async_migrations/migration/check_queue'
 require 'rails_async_migrations/migration/fire_migration'
-require 'rails_async_migrations/migration/lock'
+require 'rails_async_migrations/migration/take'
 require 'rails_async_migrations/migration/method_added'
 require 'rails_async_migrations/migration/overwrite'
 require 'rails_async_migrations/migration/run'
-require 'rails_async_migrations/migration/unlock'
+require 'rails_async_migrations/migration/give'
 
 # when included this class is the gateway
-# to the method locking system
+# to the method takeing system
 module RailsAsyncMigrations
   module Migration
     def self.included(base)

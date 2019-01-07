@@ -1,4 +1,4 @@
-RSpec.describe RailsAsyncMigrations::Migration::Lock do
+RSpec.describe RailsAsyncMigrations::Migration::Take do
   let(:resource_class) { FakeClass }
   let(:resource_instance) { resource_class.new }
   let(:method) { :free_method }
@@ -9,7 +9,7 @@ RSpec.describe RailsAsyncMigrations::Migration::Lock do
   before { change_to_it_passed }
   subject { instance.perform }
 
-  context 'method not in the lockable list' do
+  context 'method not in the takeable list' do
     it { is_expected.to be(false) }
 
     context 'does not alter the method' do
@@ -18,7 +18,7 @@ RSpec.describe RailsAsyncMigrations::Migration::Lock do
     end
   end
 
-  context 'method in the lockable list' do
+  context 'method in the takeable list' do
     let(:method) { :change }
     it { is_expected.to eq(true) }
 

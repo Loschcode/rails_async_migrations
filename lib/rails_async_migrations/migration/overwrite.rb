@@ -16,7 +16,7 @@ module RailsAsyncMigrations
       private
 
       def dispatch_trace
-        Tracer.new.verbose "#{instance.class}\##{method_name} was called in a locked state"
+        Tracer.new.verbose "#{instance.class}\##{method_name} was called in a taken state"
       end
 
       def trigger_callback

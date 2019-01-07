@@ -9,18 +9,18 @@ RSpec.describe RailsAsyncMigrations::Migration do
   # as RSpec won't hot-reload it
   before { change_to_true }
 
-  context 'without locker included within a class' do
+  context 'without taker included within a class' do
     it { expect { change_to_false }.to change { instance.send(method) }.from(true).to(false) }
   end
 
-  context 'with locker included within a class' do
+  context 'with taker included within a class' do
     before { resource_class.include described_class }
 
-    context 'method not in the lockable list' do
+    context 'method not in the takeable list' do
       it { expect { change_to_false }.to change { instance.send(method) }.from(true).to(false) }
     end
 
-    context 'method in the lockable list' do
+    context 'method in the takeable list' do
       let(:method) { :change }
       it { expect { change_to_false }.not_to change { instance.send(method) } }
     end

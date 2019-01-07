@@ -14,11 +14,11 @@ module RailsAsyncMigrations
       end
 
       def perform
-        unlock_migration_methods
+        give_migration_methods
         delete_migration_state
         run_migration
         delete_migration_state
-        lock_migration_methods
+        take_migration_methods
       end
 
       private
@@ -47,19 +47,19 @@ module RailsAsyncMigrations
         migration.name.constantize
       end
 
-      def locked_methods
-        RailsAsyncMigrations.config.locked_methods
+      def taken_methods
+        RailsAsyncMigrations.config.taken_methods
       end
 
-      def unlock_migration_methods
-        locked_methods.each do |method_name|
-          Migration::Unlock.new(class_name, method_name).perform
+      def give_migration_methods
+        taken_methods.each do |method_name|
+          Migration::Give.new(class_name, method_name).perform
         end
       end
 
-      def lock_migration_methods
-        locked_methods.each do |method_name|
-          Migration::Lock.new(class_name, method_name).perform
+      def take_migration_methods
+        taken_methods.each do |method_name|
+          Migration::Take.new(class_name, method_name).perform
         end
       end
 
