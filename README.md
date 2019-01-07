@@ -28,7 +28,7 @@ Migrating your data isn't easy and this gem isn't some magical technology. Putti
 
 This is all up to you, but be aware this solves some problems, but makes you think of the different strategies you should adopt, depending your project.
 
-**Your migrations should be written being aware it'll be run on a parallel daemon which can crash, restart and try things again**
+**Your asynchronous migrations should be written being aware it'll be run on a parallel daemon which can crash, restart and try things again**
 
 ## Requirements
 
