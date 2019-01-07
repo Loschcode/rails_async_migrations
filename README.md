@@ -13,7 +13,22 @@ Most people turn heavy data changes into `rake tasks` or split workers; there ar
 1. Migrations should only mutate database structures and not its data, and if it's the case, it should be split and processed via other means.
 2. Migrations are everything which alter data one time, typically during a deployment of new code and structure.
 
-Turning data changes into a `rake task` can be a good idea, and it's ideal to test it out too, but sometimes you need this **fat ass loop** of **>1,000,000 records** which will be run **once, and only once** to be run fast and without locking down the deployment process itself; making a `rake task` for that is overkill. After all, it will only be used once and within a specific structure / data context. This gem is here to answer this need.
+Turning data changes into a `rake task` can be a good idea, and it's ideal to test it out too, but sometimes you need this **fat ass loop** of **>10,000,000 records** which will be run **once, and only once** with complicated conditions to be run fast and without locking down the deployment process itself; making a `rake task` for that is overkill. After all, it will only be used once and within a specific structure / data context. This gem is here to answer this need.
+
+Some would argue there's also `rake db:seed` for that, which I agree with. The advantage over this methodology is to be able to split in different steps the updating process and have more flow control. By using this gem you can monitor the different completed changes while they are being run, because it uses the same philosophy than step-by-step migrations. Seeding data in term of flow process isn't so different from migrating a database structure, that's why so many people hack it this way (directly within the migrations).
+
+## Warning
+
+Migrating your data isn't easy and this gem isn't some magical technology. Putting some of your migration logic into a parallel asynchronous queue has consequences. Be careful about what you turn asynchronous:
+
+- Does it have any relation with what's run synchronously ?
+- Should I configure my workers to repeat the migration, or kill it after one full attempt ?
+- Is there a risk of crash of my synchronous migration ? If so, should I let the asynchronous being spawned before safety is ensured ?
+- Should I use ActiveRecord::Migration functionalities (especially DDL transactions) or use it in parallel to keep a safety net on worker idempotency ?
+
+This is all up to you, but be aware this solves some problems, but makes you think of the different strategies you should adopt, depending your project.
+
+**Your asynchronous migrations should be written being aware it'll be run on a parallel daemon which can crash, restart and try things again**
 
 ## Requirements
 
@@ -69,16 +84,16 @@ class Test < ActiveRecord::Migration[5.2]
   turn_async
 
   def change
-    create_table 'tests' do |t|
-      t.string :test
-    end
+    # data update logic you would put into a worker here
   end
 end
 ```
 
 From now on, when you run this migration it'll simply run the normal queue, but the content of `#change` will be taken away and later on executed into an asynchronous queue.
 
-What is turned asynchronous is executed exactly the same way as a classical migration, which means you can use all keywords of the classic `ActiveRecord::Migration` such as `create_table`, `add_column`, etc.
+What is turned asynchronous is executed exactly the same way as a classical migration, which means you can use all keywords of the classic `ActiveRecord::Migration` such as `create_table`, `add_column`, ...
+
+**It does not mean you should use them like you would in a synchronous migration.** To avoid data inconsistency, be careful about idempotency which's a natural side effect of using workers; add up conditions to make it reliable.
 
 ## Configuration
 
