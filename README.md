@@ -22,7 +22,7 @@ Some would argue there's also `rake db:seed` for that, which I agree with. The a
 Migrating your data isn't easy and this gem isn't some magical technology. Putting some of your migration logic into a parallel asynchronous queue has consequences. Be careful about what you turn asynchronous:
 
 - Does it have any relation with what's run synchronously ?
-- Should I configure my workers to repeat the migration, or kill it after one attempt ?
+- Should I configure my workers to repeat the migration, or kill it after one full attempt ?
 - Is there a risk of crash of my synchronous migration ? If so, should I let the asynchronous being spawned before safety is ensured ?
 - Should I use ActiveRecord::Migration functionalities (especially DDL transactions) or use it in parallel to keep a safety net on worker idempotency ?
 
