@@ -4,6 +4,8 @@
 module RailsAsyncMigrations
   module Migration
     class Take
+      include RailsAsyncMigrations::DefineMethodIn
+
       attr_reader :resource_class, :method_name
 
       def initialize(resource_class, method_name)
@@ -39,7 +41,7 @@ module RailsAsyncMigrations
       end
 
       def preserve_method_logics
-        resource_class.define_method(clone_method_name, &captured_method)
+        define_method_in(resource_class, clone_method_name, &captured_method)
       end
 
       def captured_method
@@ -47,7 +49,7 @@ module RailsAsyncMigrations
       end
 
       def overwrite_method
-        resource_class.define_method(method_name, &overwrite_closure)
+        define_method_in(resource_class, method_name, &overwrite_closure)
       end
 
       def overwrite_closure

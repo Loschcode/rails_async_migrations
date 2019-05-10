@@ -8,6 +8,7 @@ begin
 rescue LoadError
 end
 
+require 'rails_async_migrations/define_method_in'
 require 'rails_async_migrations/connection/active_record'
 require 'rails_async_migrations/config'
 require 'rails_async_migrations/migration'
