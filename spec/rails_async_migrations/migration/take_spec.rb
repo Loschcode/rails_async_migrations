@@ -1,10 +1,12 @@
 RSpec.describe RailsAsyncMigrations::Migration::Take do
+  include RailsAsyncMigrations::DefineMethodIn
+  
   let(:resource_class) { FakeClass }
   let(:resource_instance) { resource_class.new }
   let(:method) { :free_method }
   let(:instance) { described_class.new(resource_class, method) }
 
-  let(:change_to_it_passed) { resource_class.define_method(method, -> { 'it passed' }) }
+  let(:change_to_it_passed) { define_method_in(resource_class, method) { 'it passed' } }
 
   before { change_to_it_passed }
   subject { instance.perform }

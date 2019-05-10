@@ -1,6 +1,8 @@
 module RailsAsyncMigrations
   module Migration
     class Give
+      include RailsAsyncMigrations::DefineMethodIn
+      
       attr_reader :resource_class, :method_name
 
       def initialize(resource_class, method_name)
@@ -17,7 +19,7 @@ module RailsAsyncMigrations
       def restore_original_method
         if valid?
           Take.new(resource_class, method_name).suspend_take do
-            resource_class.define_method(method_name, &method_clone)
+            define_method_in(resource_class, method_name, &method_clone)
           end
         end
       end
