@@ -9,14 +9,14 @@ module RailsAsyncMigrations
       end
 
       def perform
-        dispatch_trace
+        dispatch_notify
         trigger_callback
       end
 
       private
 
-      def dispatch_trace
-        Tracer.new.verbose "#{instance.class}\##{method_name} was called in a taken state"
+      def dispatch_notify
+        Notifier.new.verbose "#{instance.class}\##{method_name} was called in a taken state"
       end
 
       def trigger_callback

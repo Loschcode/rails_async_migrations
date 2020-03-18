@@ -3,6 +3,7 @@ RSpec.describe RailsAsyncMigrations::Migration::CheckQueue do
 
   context '#perform' do
     subject { instance.perform }
+
     it { is_expected.to be_falsey }
   end
 end

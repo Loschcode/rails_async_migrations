@@ -6,7 +6,7 @@ module RailsAsyncMigrations
       end
 
       def perform
-        Tracer.new.verbose 'Check queue has been triggered'
+        Notifier.new.verbose 'Check queue has been triggered'
 
         return if has_failures?
         return if has_on_going?
@@ -19,7 +19,7 @@ module RailsAsyncMigrations
       private
 
       def fire_migration
-        Tracer.new.verbose "Migration `#{current_migration.version}` (\##{current_migration.id}) will now be processed"
+        Notifier.new.verbose "Migration `#{current_migration.version}` (\##{current_migration.id}) will now be processed"
         Workers.new(:fire_migration).perform(current_migration.id)
       end
 
@@ -45,21 +45,21 @@ module RailsAsyncMigrations
 
       def no_migration?
         unless current_migration
-          Tracer.new.verbose 'No available migration in queue, cancelling check'
+          Notifier.new.verbose 'No available migration in queue, cancelling check'
           true
         end
       end
 
       def has_on_going?
         if pending_migration || processing_migration
-          Tracer.new.verbose 'Another migration under progress, cancelling check'
+          Notifier.new.verbose 'Another migration under progress, cancelling check'
           true
         end
       end
 
       def has_failures?
         if failed_migration
-          Tracer.new.verbose 'Failing migration blocking the queue, cancelling check'
+          Notifier.new.verbose 'Failing migration blocking the queue, cancelling check'
           true
         end
       end

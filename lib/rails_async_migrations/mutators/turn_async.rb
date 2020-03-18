@@ -8,14 +8,14 @@ module RailsAsyncMigrations
       end
 
       def perform
-        Tracer.new.verbose '`turn_async` has been triggered'
+        Notifier.new.verbose '`turn_async` has been triggered'
         alter_migration
       end
 
       private
 
       def alter_migration
-        Tracer.new.verbose "#{migration_class} is now asynchronous"
+        Notifier.new.verbose "#{migration_class} is now asynchronous"
         migration_class.include RailsAsyncMigrations::Migration
       end
     end

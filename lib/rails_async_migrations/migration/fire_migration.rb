@@ -5,6 +5,7 @@ module RailsAsyncMigrations
       attr_reader :migration
 
       def initialize(migration_id)
+        @notifier = Notifier.new
         @migration = AsyncSchemaMigration.find(migration_id)
       end
 
@@ -32,25 +33,34 @@ module RailsAsyncMigrations
       end
 
       def done?
-        if migration.reload.state == 'done'
-          Tracer.new.verbose "Migration #{migration.id} is already `done`, cancelling fire"
-          return true
-        end
+        return unless migration.reload.state == 'done'
+
+        @notifier.failed("Migration #{migration.version} is already `done`, cancelling fire")
+        return true
       end
 
       def process!
+        @start_time = Time.now
+
         migration.update! state: 'processing'
+        @notifier.processing("Migration #{migration.version} is being processed")
       end
 
       def done!
         migration.update! state: 'done'
-        Tracer.new.verbose "Migration #{migration.id} was correctly processed"
         migration.reload
+        @notifier.done("Migration #{migration.version} has been successfully processed in #{execution_time}")
       end
 
       def failed_with!(error)
         migration.update! state: 'failed'
-        Tracer.new.verbose "Migration #{migration.id} failed with exception `#{error}`"
+        @notifier.failed("Migration #{migration.version} failed with exception `#{error}`")
+      end
+
+      def execution_time
+        exec_time_in_sec = (migration.updated_at - @start_time).to_i
+
+        "#{exec_time_in_sec}s"
       end
     end
   end

@@ -5,6 +5,7 @@ RSpec.describe RailsAsyncMigrations::Migration::MethodAdded do
 
   context '#perform' do
     subject { instance.perform }
+
     it { is_expected.to be_truthy }
   end
 end

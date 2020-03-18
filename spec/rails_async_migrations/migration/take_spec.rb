@@ -14,6 +14,7 @@ RSpec.describe RailsAsyncMigrations::Migration::Take do
 
     context 'does not alter the method' do
       before { subject }
+
       it { expect(resource_instance.send(method)).to eq('it passed') }
     end
   end
@@ -24,6 +25,7 @@ RSpec.describe RailsAsyncMigrations::Migration::Take do
 
     context 'alter the method' do
       before { subject }
+
       it { expect(resource_instance.send(method)).not_to eq('it passed') }
     end
   end

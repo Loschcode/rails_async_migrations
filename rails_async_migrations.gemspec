@@ -19,12 +19,14 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency 'bundler', '~> 1.17'
+  spec.add_development_dependency 'bundler', '~> 2.1.4'
   spec.add_development_dependency 'pry', '~> 0.12'
   spec.add_development_dependency 'rails', '~> 5.2'
-  spec.add_development_dependency 'rake', '~> 10.0'
-  spec.add_development_dependency 'sqlite3'
-  spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'database_cleaner'
-  spec.add_development_dependency 'rspec-sidekiq'
+  spec.add_development_dependency 'rake', '~> 13.0.1'
+  spec.add_development_dependency 'sqlite3', '~> 1.4.2'
+  spec.add_development_dependency 'rspec', '~> 3.9.0'
+  spec.add_development_dependency 'database_cleaner', '~> 1.7.0'
+  spec.add_development_dependency 'rspec-sidekiq', '~> 3.0.3'
+  spec.add_development_dependency 'shoulda-matchers', '~> 4.2.0'
+  spec.add_development_dependency 'fantaskspec', '~> 1.1.0'
 end

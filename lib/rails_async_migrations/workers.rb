@@ -11,6 +11,7 @@ module RailsAsyncMigrations
 
     def perform(args = [])
       return unless ALLOWED.include? called_worker
+
       self.send called_worker, *args
     end
 
@@ -19,7 +20,7 @@ module RailsAsyncMigrations
     def check_queue(*args)
       case workers_type
       when :sidekiq
-        Workers::Sidekiq::CheckQueueWorker.perform_async(*args)
+        Workers::Sidekiq::CheckQueueWorker.set(queue: default_queue).perform_async(*args)
       when :delayed_job
         ::Delayed::Job.enqueue Migration::CheckQueue.new
       end
@@ -28,7 +29,7 @@ module RailsAsyncMigrations
     def fire_migration(*args)
       case workers_type
       when :sidekiq
-        Workers::Sidekiq::FireMigrationWorker.perform_async(*args)
+        Workers::Sidekiq::FireMigrationWorker.set(queue: default_queue).perform_async(*args)
       when :delayed_job
         ::Delayed::Job.enqueue Migration::FireMigration.new(*args)
       end
@@ -36,6 +37,10 @@ module RailsAsyncMigrations
 
     def workers_type
       RailsAsyncMigrations.config.workers
+    end
+
+    def default_queue
+      RailsAsyncMigrations.config.queue
     end
 
     def ensure_worker_presence

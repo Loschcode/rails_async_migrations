@@ -1,5 +1,6 @@
 require 'active_support'
 require 'active_record'
+require 'slack-notifier'
 
 begin
   require 'sidekiq'
@@ -13,7 +14,7 @@ require 'rails_async_migrations/config'
 require 'rails_async_migrations/migration'
 require 'rails_async_migrations/class_mutators'
 require 'rails_async_migrations/instance_mutators'
-require 'rails_async_migrations/tracer'
+require 'rails_async_migrations/notifier'
 require 'rails_async_migrations/version'
 require 'rails_async_migrations/railtie' if defined?(Rails)
 require 'rails_async_migrations/models/async_schema_migration'

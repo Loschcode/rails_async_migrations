@@ -3,7 +3,7 @@ class AsyncSchemaMigration < ActiveRecord::Base
   validates :state, inclusion: { in: %w[created pending processing done failed] }
   validates :direction, inclusion: { in: %w[up down] }
 
-  after_save :trace
+  after_commit :notify, on: :create
 
   scope :created, -> { where(state: 'created').by_version }
   scope :pending, -> { where(state: 'pending').by_version }
@@ -12,7 +12,7 @@ class AsyncSchemaMigration < ActiveRecord::Base
   scope :failed, -> { where(state: 'failed').by_version }
   scope :by_version, -> { order(version: :asc) }
 
-  def trace
-    RailsAsyncMigrations::Tracer.new.verbose "Asynchronous migration `#{id}` is now `#{state}`"
+  def notify
+    RailsAsyncMigrations::Notifier.new.verbose("Asynchronous migration `#{id}` is now `#{state}`")
   end
 end

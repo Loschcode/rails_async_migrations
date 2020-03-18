@@ -5,6 +5,18 @@ module UtilsHelpers
     end
   end
 
+  def config_queue_as(queue)
+    RailsAsyncMigrations.config do |config|
+      config.queue = queue
+    end
+  end
+
+  def config_slack_webhook_url_as(slack_webhook_url)
+    RailsAsyncMigrations.config do |config|
+      config.slack_webhook_url = slack_webhook_url
+    end
+  end
+
   def fake_version!
     allow_any_instance_of(
       RailsAsyncMigrations::Connection::ActiveRecord
