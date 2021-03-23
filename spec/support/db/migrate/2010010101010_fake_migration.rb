@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class FakeMigration < ActiveRecord::Migration[5.2]
+class FakeMigration < ActiveRecord::Migration[6.0]
   turn_async
 
   def change

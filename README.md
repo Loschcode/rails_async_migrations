@@ -36,12 +36,12 @@ You can use this library through different background processing technologies
 
 | Type             | Version | Documentation                                 | Default |
 | ---------------- | ------- | --------------------------------------------- | ------- |
-| **Sidekiq**      | 5.2.3   | https://github.com/mperham/sidekiq            | NO      |
-| **Delayed::Job** | 4.1.3   | https://github.com/collectiveidea/delayed_job | YES     |
+| **Sidekiq**      | 6.1.3   | https://github.com/mperham/sidekiq            | YES      |
+| **Delayed::Job** | 4.1.5   | https://github.com/collectiveidea/delayed_job | NO     |
 
 Please install and configure one of those before to use this gem. If you use other libraries to setup your workers, please hit me up and I'll create additional adapters for you.
 
-This gem has been tested and is working with `ActiveRecord 5.2.2`, if you notice abnormal behavior with other versions or want it compatible with earlier versions, please hit me up.
+This gem has been tested and is working with `ActiveRecord 6.0.3.5`, if you notice abnormal behavior with other versions or want it compatible with earlier versions, please hit me up.
 
 ## Installation
 
@@ -62,7 +62,7 @@ After the gem has been installed, use the generator to add the needed changes
 This will add a new migration for the table `async_schema_migrations` which will be used by the gem. You can also add the migration yourself like so:
 
 ```
-class CreateAsyncSchemaMigrations < ActiveRecord::Migration[5.2]
+class CreateAsyncSchemaMigrations < ActiveRecord::Migration[6.0]
   def change
     create_table :async_schema_migrations do |t|
       t.string :version
@@ -80,7 +80,7 @@ end
 To turn some of your migrations asynchronous, generate a migration as you would normally do and use the `turn_async` keyword.
 
 ```
-class Test < ActiveRecord::Migration[5.2]
+class Test < ActiveRecord::Migration[6.0]
   turn_async
 
   def change
@@ -152,6 +152,21 @@ To find the matching migration, be aware the `version` value is always the same 
 I created this library as my company was struggling in its deployment process. It lacks functionalities but this is a good starting point; everything is easily extendable so don't hesitate to add your own needed methods to it.
 
 You're more than welcome to open an issue with feature requests so I can work on improving this library.
+
+### Setting everything up
+
+1. Install docker
+2. Run `docker-compose build`
+3. Run `docker-compose run app bundle`
+
+### Running tests
+
+```bash
+docker-compose run app rspec
+# or
+docker-compose run app bash
+rspec
+```
 
 ## Contributing
 
