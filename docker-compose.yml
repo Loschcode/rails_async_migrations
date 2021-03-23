@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  app: &app
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        RUBY_VERSION: "2.7.2"
+        BUNDLER_VERSION: "2.2.15"
+    image: rails-async-migrations
+    tmpfs:
+      - /tmp
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/rails_async_migrations:cached
+      - bundle:/usr/local/bundle
+    environment:
+      - EDITOR=nano
+
+volumes:
+  bundle:
