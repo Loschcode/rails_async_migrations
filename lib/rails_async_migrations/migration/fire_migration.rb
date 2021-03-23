@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # we check the state of the queue and launch run worker if needed
 module RailsAsyncMigrations
   module Migration
@@ -28,7 +29,7 @@ module RailsAsyncMigrations
       def run_migration
         Migration::Run.new(migration.direction, migration.version).perform
       rescue Exception => exception
-        failed_with! exception
+        failed_with!(exception)
         raise
       end
 
@@ -36,24 +37,24 @@ module RailsAsyncMigrations
         return unless migration.reload.state == 'done'
 
         @notifier.failed("Migration #{migration.version} is already `done`, cancelling fire")
-        return true
+        true
       end
 
       def process!
         @start_time = Time.now
 
-        migration.update! state: 'processing'
+        migration.update!(state: 'processing')
         @notifier.processing("Migration #{migration.version} is being processed")
       end
 
       def done!
-        migration.update! state: 'done'
+        migration.update!(state: 'done')
         migration.reload
         @notifier.done("Migration #{migration.version} has been successfully processed in #{execution_time}")
       end
 
       def failed_with!(error)
-        migration.update! state: 'failed'
+        migration.update!(state: 'failed')
         @notifier.failed("Migration #{migration.version} failed with exception `#{error}`")
       end
 

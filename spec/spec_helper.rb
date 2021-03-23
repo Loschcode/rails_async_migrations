@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'bundler/setup'
 require 'pry'
 require 'rails_async_migrations'
@@ -14,7 +15,7 @@ RSpec.configure do |config|
   config.disable_monkey_patching!
   config.infer_rake_task_specs_from_file_location!
 
-  config.expect_with :rspec do |c|
+  config.expect_with(:rspec) do |c|
     c.syntax = :expect
   end
 
@@ -29,7 +30,7 @@ RSpec.configure do |config|
     load file
   end
 
-  config.include UtilsHelpers
+  config.include(UtilsHelpers)
 
   load 'support/db/schema.rb'
   load 'support/db/migrate/2010010101010_fake_migration.rb'
@@ -37,12 +38,12 @@ RSpec.configure do |config|
 
   DatabaseCleaner.strategy = :truncation
 
-  config.before :each do
+  config.before(:each) do
     Delayed::Worker.delay_jobs = false
     DatabaseCleaner.start
   end
 
-  config.after :each do
+  config.after(:each) do
     Delayed::Worker.delay_jobs = true
     DatabaseCleaner.clean
   end
@@ -56,8 +57,8 @@ end
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
-    with.test_framework :rspec
-    with.library :active_record
-    with.library :active_model
+    with.test_framework(:rspec)
+    with.library(:active_record)
+    with.library(:active_model)
   end
 end

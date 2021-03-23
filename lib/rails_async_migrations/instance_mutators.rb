@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_async_migrations/mutators/base'
 require 'rails_async_migrations/mutators/turn_async'
 require 'rails_async_migrations/mutators/trigger_callback'

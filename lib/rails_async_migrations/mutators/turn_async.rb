@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module RailsAsyncMigrations
   module Mutators
     class TurnAsync < Base
@@ -8,15 +9,15 @@ module RailsAsyncMigrations
       end
 
       def perform
-        Notifier.new.verbose '`turn_async` has been triggered'
+        Notifier.new.verbose('`turn_async` has been triggered')
         alter_migration
       end
 
       private
 
       def alter_migration
-        Notifier.new.verbose "#{migration_class} is now asynchronous"
-        migration_class.include RailsAsyncMigrations::Migration
+        Notifier.new.verbose("#{migration_class} is now asynchronous")
+        migration_class.include(RailsAsyncMigrations::Migration)
       end
     end
   end

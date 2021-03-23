@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # we check the state of the queue and launch run worker if needed
 module RailsAsyncMigrations
   module Migration
@@ -6,7 +7,7 @@ module RailsAsyncMigrations
       end
 
       def perform
-        Notifier.new.verbose 'Check queue has been triggered'
+        Notifier.new.verbose('Check queue has been triggered')
 
         return if has_failures?
         return if has_on_going?
@@ -19,12 +20,14 @@ module RailsAsyncMigrations
       private
 
       def fire_migration
-        Notifier.new.verbose "Migration `#{current_migration.version}` (\##{current_migration.id}) will now be processed"
+        Notifier.new.verbose(
+          "Migration `#{current_migration.version}` (\##{current_migration.id}) will now be processed"
+        )
         Workers.new(:fire_migration).perform(current_migration.id)
       end
 
       def pending!
-        current_migration.update state: 'pending'
+        current_migration.update(state: 'pending')
       end
 
       def current_migration
@@ -45,21 +48,21 @@ module RailsAsyncMigrations
 
       def no_migration?
         unless current_migration
-          Notifier.new.verbose 'No available migration in queue, cancelling check'
+          Notifier.new.verbose('No available migration in queue, cancelling check')
           true
         end
       end
 
       def has_on_going?
         if pending_migration || processing_migration
-          Notifier.new.verbose 'Another migration under progress, cancelling check'
+          Notifier.new.verbose('Another migration under progress, cancelling check')
           true
         end
       end
 
       def has_failures?
         if failed_migration
-          Notifier.new.verbose 'Failing migration blocking the queue, cancelling check'
+          Notifier.new.verbose('Failing migration blocking the queue, cancelling check')
           true
         end
       end

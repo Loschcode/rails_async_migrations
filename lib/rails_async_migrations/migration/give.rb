@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module RailsAsyncMigrations
   module Migration
     class Give
@@ -23,7 +24,7 @@ module RailsAsyncMigrations
       end
 
       def valid?
-        temporary_instance.respond_to? clone_method_name
+        temporary_instance.respond_to?(clone_method_name)
       end
 
       def clone_method_name

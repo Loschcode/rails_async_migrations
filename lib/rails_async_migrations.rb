@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'active_support'
 require 'active_record'
 require 'slack-notifier'
@@ -40,6 +41,6 @@ module RailsAsyncMigrations
 end
 
 ActiveSupport.on_load(:active_record) do
-  ActiveRecord::Migration.extend RailsAsyncMigrations::ClassMutators
-  ActiveRecord::Migration.include RailsAsyncMigrations::InstanceMutators
+  ActiveRecord::Migration.extend(RailsAsyncMigrations::ClassMutators)
+  ActiveRecord::Migration.include(RailsAsyncMigrations::InstanceMutators)
 end

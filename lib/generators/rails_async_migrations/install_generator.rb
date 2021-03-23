@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails/generators'
 require 'rails/generators/migration'
 
@@ -14,8 +15,8 @@ module RailsAsyncMigrations
       end
 
       def copy_migrations
-        migration_template "create_async_schema_migrations.rb", 
-        "db/migrate/create_async_schema_migrations.rb"
+        migration_template("create_async_schema_migrations.rb",
+        "db/migrate/create_async_schema_migrations.rb")
       end
     end
   end

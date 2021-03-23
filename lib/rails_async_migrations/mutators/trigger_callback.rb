@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module RailsAsyncMigrations
   module Mutators
     class TriggerCallback < Base
@@ -12,7 +13,7 @@ module RailsAsyncMigrations
       # if you use up down and change it'll be called 3 times for example
       def perform
         unless active_record.allowed_direction?
-          Notifier.new.verbose "Direction `#{direction}` not allowed."
+          Notifier.new.verbose("Direction `#{direction}` not allowed.")
           return
         end
 

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module RailsAsyncMigrations
   module Migration
     class Overwrite
@@ -16,7 +17,7 @@ module RailsAsyncMigrations
       private
 
       def dispatch_notify
-        Notifier.new.verbose "#{instance.class}\##{method_name} was called in a taken state"
+        Notifier.new.verbose("#{instance.class}\##{method_name} was called in a taken state")
       end
 
       def trigger_callback

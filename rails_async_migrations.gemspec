@@ -29,4 +29,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec-sidekiq', '~> 3.0.3'
   spec.add_development_dependency 'shoulda-matchers', '~> 4.2.0'
   spec.add_development_dependency 'fantaskspec', '~> 1.1.0'
+  spec.add_development_dependency 'rubocop-shopify'
 end

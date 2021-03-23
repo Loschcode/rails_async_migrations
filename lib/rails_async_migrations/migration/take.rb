@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # takes any class methods depending on a configuration list
 # this allow us to ignore migration without making
 # a parallel pipeline system
@@ -22,7 +23,7 @@ module RailsAsyncMigrations
         end
       end
 
-      def suspend_take(&block)
+      def suspend_take
         give
         yield if block_given?
         take
@@ -61,7 +62,7 @@ module RailsAsyncMigrations
       end
 
       def taken_method?
-        RailsAsyncMigrations.config.taken_methods.include? method_name
+        RailsAsyncMigrations.config.taken_methods.include?(method_name)
       end
 
       def take

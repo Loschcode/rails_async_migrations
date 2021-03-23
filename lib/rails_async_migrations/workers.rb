@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # we check the state of the queue and launch run worker if needed
 module RailsAsyncMigrations
   class Workers
@@ -10,9 +11,9 @@ module RailsAsyncMigrations
     end
 
     def perform(args = [])
-      return unless ALLOWED.include? called_worker
+      return unless ALLOWED.include?(called_worker)
 
-      self.send called_worker, *args
+      send(called_worker, *args)
     end
 
     private
@@ -22,7 +23,7 @@ module RailsAsyncMigrations
       when :sidekiq
         Workers::Sidekiq::CheckQueueWorker.set(queue: default_queue).perform_async(*args)
       when :delayed_job
-        ::Delayed::Job.enqueue Migration::CheckQueue.new
+        ::Delayed::Job.enqueue(Migration::CheckQueue.new)
       end
     end
 
@@ -31,7 +32,7 @@ module RailsAsyncMigrations
       when :sidekiq
         Workers::Sidekiq::FireMigrationWorker.set(queue: default_queue).perform_async(*args)
       when :delayed_job
-        ::Delayed::Job.enqueue Migration::FireMigration.new(*args)
+        ::Delayed::Job.enqueue(Migration::FireMigration.new(*args))
       end
     end
 

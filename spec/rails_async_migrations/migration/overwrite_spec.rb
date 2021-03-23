@@ -1,4 +1,5 @@
-RSpec.describe RailsAsyncMigrations::Migration::Overwrite do
+# frozen_string_literal: true
+RSpec.describe(RailsAsyncMigrations::Migration::Overwrite) do
   let(:instance) { described_class.new(class_instance, method_name) }
   let(:class_instance) { FakeMigration.new }
   let(:method_name) { :change }
@@ -12,12 +13,12 @@ RSpec.describe RailsAsyncMigrations::Migration::Overwrite do
   context '#perform' do
     subject { instance.perform }
 
-    it { is_expected.to be_instance_of(Delayed::Backend::ActiveRecord::Job) }
+    it { is_expected.to(be_instance_of(Delayed::Backend::ActiveRecord::Job)) }
 
     context 'with sidekiq' do
       before { config_worker_as :sidekiq }
 
-      it { is_expected.to be_instance_of(String) }
+      it { is_expected.to(be_instance_of(String)) }
     end
   end
 end

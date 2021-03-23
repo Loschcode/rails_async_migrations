@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_async_migrations/mutators/base'
 require 'rails_async_migrations/mutators/turn_async'
 require 'rails_async_migrations/mutators/trigger_callback'
@@ -13,14 +14,14 @@ module RailsAsyncMigrations
   end
 end
 
-    # def self.descendants
-    #   ObjectSpace.each_object(Class).select do
-    #     |current| current < self
-    #   end
-    # end
-      # descendants = self.class.descendants
-      # descendants.delete_at descendants.index(ActiveRecord::Migration::Current)
-      # real_self = descendants.last
+# def self.descendants
+#   ObjectSpace.each_object(Class).select do
+#     |current| current < self
+#   end
+# end
+# descendants = self.class.descendants
+# descendants.delete_at descendants.index(ActiveRecord::Migration::Current)
+# real_self = descendants.last
 
-      # puts "REAL SELF IS #{real_self}"
-      # 
+# puts "REAL SELF IS #{real_self}"
+#

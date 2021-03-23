@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # to run actual migration we need to require the migration files
 module RailsAsyncMigrations
   module Migration
@@ -7,7 +8,7 @@ module RailsAsyncMigrations
       def initialize(direction, version)
         @direction = direction
         @version = version
-        @migration = migration_from version
+        @migration = migration_from(version)
 
         ensure_data_consistency
         require "#{Rails.root}/#{migration.filename}" if defined? Rails
@@ -24,7 +25,7 @@ module RailsAsyncMigrations
       private
 
       def migration_from(version)
-        Connection::ActiveRecord.new(direction).migration_from version
+        Connection::ActiveRecord.new(direction).migration_from(version)
       end
 
       def run_migration

@@ -1,4 +1,5 @@
-RSpec.describe RailsAsyncMigrations::Migration::Take do
+# frozen_string_literal: true
+RSpec.describe(RailsAsyncMigrations::Migration::Take) do
   let(:resource_class) { FakeClass }
   let(:resource_instance) { resource_class.new }
   let(:method) { :free_method }
@@ -10,28 +11,28 @@ RSpec.describe RailsAsyncMigrations::Migration::Take do
   subject { instance.perform }
 
   context 'method not in the takeable list' do
-    it { is_expected.to be(false) }
+    it { is_expected.to(be(false)) }
 
     context 'does not alter the method' do
       before { subject }
 
-      it { expect(resource_instance.send(method)).to eq('it passed') }
+      it { expect(resource_instance.send(method)).to(eq('it passed')) }
     end
   end
 
   context 'method in the takeable list' do
     let(:method) { :change }
-    it { is_expected.to eq(true) }
+    it { is_expected.to(eq(true)) }
 
     context 'alter the method' do
       before { subject }
 
-      it { expect(resource_instance.send(method)).not_to eq('it passed') }
+      it { expect(resource_instance.send(method)).not_to(eq('it passed')) }
     end
   end
 end
 
- class FakeClass
+class FakeClass
   def free_method
     true
   end
@@ -47,4 +48,4 @@ end
   def down
     true
   end
- end
+end

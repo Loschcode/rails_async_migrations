@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module RailsAsyncMigrations
   module Connection
     class ActiveRecord
@@ -18,7 +19,7 @@ module RailsAsyncMigrations
       end
 
       def current_migration
-        @current_migration ||= migration_from current_version
+        @current_migration ||= migration_from(current_version)
       end
 
       def migration_from(version)

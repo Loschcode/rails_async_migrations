@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_async_migrations/migration/check_queue'
 require 'rails_async_migrations/migration/fire_migration'
 require 'rails_async_migrations/migration/take'
@@ -11,7 +12,7 @@ require 'rails_async_migrations/migration/give'
 module RailsAsyncMigrations
   module Migration
     def self.included(base)
-      base.extend ClassMethods
+      base.extend(ClassMethods)
     end
 
     module ClassMethods

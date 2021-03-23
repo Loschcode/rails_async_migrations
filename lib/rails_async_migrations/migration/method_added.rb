@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # any method added within the synchronous migration
 # with asynchronous directive will trigger this class
 module RailsAsyncMigrations
