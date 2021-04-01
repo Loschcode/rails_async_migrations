@@ -19,14 +19,14 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency 'pry', '~> 0.12'
+  spec.add_development_dependency 'pry', '~> 0.14'
   spec.add_development_dependency 'rubocop-shopify'
-  spec.add_development_dependency 'rails', '~> 6.0.3.5'
-  spec.add_development_dependency 'rake', '~> 13.0.3'
+  spec.add_development_dependency 'rails', '~> 6.1'
+  spec.add_development_dependency 'rake', '~> 13'
   spec.add_development_dependency 'sqlite3', '~> 1.4.2'
-  spec.add_development_dependency 'rspec', '~> 3.9.0'
-  spec.add_development_dependency 'database_cleaner', '~> 1.8.5'
-  spec.add_development_dependency 'rspec-sidekiq', '~> 3.0.3'
-  spec.add_development_dependency 'shoulda-matchers', '~> 4.2.0'
-  spec.add_development_dependency 'fantaskspec', '~> 1.1.0'
+  spec.add_development_dependency 'rspec', '~> 3.10'
+  spec.add_development_dependency 'database_cleaner', '~> 2.0'
+  spec.add_development_dependency 'rspec-sidekiq', '~> 3.1'
+  spec.add_development_dependency 'shoulda-matchers', '~> 4'
+  spec.add_development_dependency 'fantaskspec', '~> 1'
 end
