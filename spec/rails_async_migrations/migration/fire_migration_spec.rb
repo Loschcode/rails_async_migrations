@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 RSpec.describe(RailsAsyncMigrations::Migration::FireMigration) do
-  let(:instance) { described_class.new(migration.id) }
   let(:migration) do
     AsyncSchemaMigration.create!(
-      version: '00000',
+      version: '2110010101010',
       state: 'created',
       direction: 'up'
     )
   end
+  let(:instance) { described_class.new(migration.id) }
 
   context '#perform' do
     subject { instance.perform }

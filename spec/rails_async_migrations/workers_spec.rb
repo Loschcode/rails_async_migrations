@@ -5,7 +5,7 @@ RSpec.describe(RailsAsyncMigrations::Workers) do
   let(:args) { [] }
   let(:async_schema_migration) do
     AsyncSchemaMigration.create!(
-      version: '00000',
+      version: '2110010101010',
       direction: 'up',
       state: 'created'
     )

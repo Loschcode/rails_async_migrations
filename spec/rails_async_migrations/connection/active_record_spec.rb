@@ -13,7 +13,7 @@ RSpec.describe(RailsAsyncMigrations::Connection::ActiveRecord) do
   context '#current_version' do
     subject { instance.current_version }
 
-    it { is_expected.to(eq('00000')) }
+    it { is_expected.to(eq('2110010101010')) }
   end
 
   context '#current_migration' do
@@ -23,7 +23,7 @@ RSpec.describe(RailsAsyncMigrations::Connection::ActiveRecord) do
   end
 
   context '#migration_from(version)' do
-    let(:version) { '000000000' }
+    let(:version) { '2110010101010' }
     subject { instance.migration_from(version) }
 
     it { is_expected.to(be_instance_of(FakeMigrationProxy)) }

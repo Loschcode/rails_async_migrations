@@ -36,7 +36,7 @@ module RailsAsyncMigrations
       def done?
         return unless migration.reload.state == 'done'
 
-        @notifier.failed("Migration #{migration.version} is already `done`, cancelling fire")
+        @notifier.failed("Migration #{markdown_migration} is already `done`, cancelling fire.")
         true
       end
 
@@ -44,24 +44,28 @@ module RailsAsyncMigrations
         @start_time = Time.now
 
         migration.update!(state: 'processing')
-        @notifier.processing("Migration #{migration.version} is being processed")
+        @notifier.processing("Migration #{markdown_migration} is being processed.")
       end
 
       def done!
         migration.update!(state: 'done')
         migration.reload
-        @notifier.done("Migration #{migration.version} has been successfully processed in #{execution_time}")
+        @notifier.done("Migration #{markdown_migration} has been successfully processed in #{execution_time}.")
       end
 
       def failed_with!(error)
         migration.update!(state: 'failed')
-        @notifier.failed("Migration #{migration.version} failed with exception `#{error}`")
+        @notifier.failed("Migration #{markdown_migration} failed with exception `#{error}`.")
       end
 
       def execution_time
         exec_time_in_sec = (migration.updated_at - @start_time).to_i
 
         "#{exec_time_in_sec}s"
+      end
+
+      def markdown_migration
+        Migration::MarkdownMigration.call(async_migration: migration)
       end
     end
   end
