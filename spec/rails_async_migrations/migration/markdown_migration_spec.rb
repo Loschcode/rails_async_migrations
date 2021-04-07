@@ -43,7 +43,7 @@ RSpec.describe(RailsAsyncMigrations::Migration::MarkdownMigration) do
         let(:url) { 'https://github.com/Hivebrite/rails_async_migrations/blob/master' }
 
         before do
-          allow(described_class).to(receive(:slack_git_url_mapping_for_envs).and_return({ env: url }))
+          allow(described_class).to(receive(:slack_git_url).and_return(url))
           allow(described_class).to(receive(:rails_env).and_return('env'))
           allow(described_class).to(receive(:in_rails_dev_or_test_env?).and_return(false))
         end

@@ -45,17 +45,11 @@ module RailsAsyncMigrations
       end
 
       def migration_url(migration)
-        return if slack_git_url_for_env.nil?
+        return unless defined?(Rails)
+        return if in_rails_dev_or_test_env?
+        return if slack_git_url.nil?
 
-        "#{slack_git_url_for_env}/#{migration_filename(migration)}"
-      end
-
-      def slack_git_url_for_env
-        return nil unless defined?(Rails)
-        return nil if in_rails_dev_or_test_env?
-
-        @slack_git_url_for_env ||=
-          slack_git_url_mapping_for_envs.tap { break _1[rails_env] || _1[rails_env.to_sym] }
+        "#{slack_git_url}/#{migration_filename(migration)}"
       end
 
       def in_rails_dev_or_test_env?
@@ -66,8 +60,8 @@ module RailsAsyncMigrations
         ::Rails.env
       end
 
-      def slack_git_url_mapping_for_envs
-        RailsAsyncMigrations.config.slack_git_url_mapping_for_envs
+      def slack_git_url
+        RailsAsyncMigrations.config.slack_git_url
       end
     end
   end

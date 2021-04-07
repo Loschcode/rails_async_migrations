@@ -3,7 +3,7 @@
 # default values set here
 module RailsAsyncMigrations
   class Config
-    attr_accessor :taken_methods, :mode, :workers, :queue, :slack_webhook_url, :slack_title_message, :slack_git_url_mapping_for_envs
+    attr_accessor :taken_methods, :mode, :workers, :queue, :slack_webhook_url, :slack_title_message, :slack_git_url
 
     def initialize
       @taken_methods = %i[change up down]
@@ -12,11 +12,11 @@ module RailsAsyncMigrations
       @queue = :default
     end
 
-    def slack_git_url_mapping_for_envs=(value)
-      raise ArgumentError.new('slack_git_url_mapping_for_envs must be a hash.') unless value.is_a?(Hash)
-      raise ArgumentError.new('slack_git_url_mapping_for_envs hash values must be URLs.') unless value.values.all? { URI.parse(_1).kind_of?(URI::HTTP) }
+    def slack_git_url=(value)
+      raise ArgumentError.new('slack_git_url must be a URL.') unless value.is_a?(String)
+      raise ArgumentError.new('slack_git_url must be a URL.') unless URI.parse(value).kind_of?(URI::HTTP)
 
-      @slack_git_url_mapping_for_envs = value
+      @slack_git_url = value
     end
   end
 end
