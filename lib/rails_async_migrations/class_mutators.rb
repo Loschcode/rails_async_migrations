@@ -9,6 +9,8 @@ require 'rails_async_migrations/mutators/trigger_callback'
 module RailsAsyncMigrations
   module ClassMutators
     def turn_async
+      return if RailsAsyncMigrations.config.disable_async_migrations
+
       Mutators::TurnAsync.new(self).perform
     end
   end

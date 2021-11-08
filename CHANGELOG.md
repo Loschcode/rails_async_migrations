@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.0.3
+
+- new config option: `disable_async_migrations` to disable async migrations
+
 ## v2.0.2
 
 - `slack_git_url_mapping_for_envs` has become `slack_git_url`, and now accepts only a single URL

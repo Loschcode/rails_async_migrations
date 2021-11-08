@@ -36,6 +36,12 @@ module UtilsHelpers
       FakeMigrationProxy.new
     ))
   end
+
+  def disable_async_migrations!
+    RailsAsyncMigrations.config do |config|
+      config.disable_async_migrations = true
+    end
+  end
 end
 
 class FakeMigrationProxy

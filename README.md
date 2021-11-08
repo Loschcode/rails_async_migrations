@@ -1,6 +1,6 @@
 # RailsAsyncMigrations
 
-`ActiveRecord::Migration` extension to turn your migrations asynschonous in a simple and straight forward way.
+`ActiveRecord::Migration` extension to turn your migrations asynchronous in a simple and straight forward way.
 
 ## Motives
 
@@ -61,7 +61,7 @@ After the gem has been installed, use the generator to add the needed changes
 
 This will add a new migration for the table `async_schema_migrations` which will be used by the gem. You can also add the migration yourself like so:
 
-```
+```ruby
 class CreateAsyncSchemaMigrations < ActiveRecord::Migration[6.0]
   def change
     create_table :async_schema_migrations do |t|
@@ -79,7 +79,7 @@ end
 
 To turn some of your migrations asynchronous, generate a migration as you would normally do and use the `turn_async` keyword.
 
-```
+```ruby
 class Test < ActiveRecord::Migration[6.0]
   turn_async
 
@@ -101,7 +101,7 @@ What is turned asynchronous is executed exactly the same way as a classical migr
 
 Add the following lines into your `config/initializer/` folder
 
-```
+```ruby
 RailsAsyncMigrations.config do |config|
   # :verbose can be used if you want a full log of the execution
   config.mode = :quiet
@@ -109,6 +109,9 @@ RailsAsyncMigrations.config do |config|
   # which adapter worker you want to use for this library
   # for now you have two options: :delayed_job or :sidekiq
   config.workers = :sidekiq
+
+  ## You can disable the gem using the following configuration option: 
+  # config.disable_async_migrations = true
 end
 ```
 
@@ -125,7 +128,7 @@ You can also manually launch the queue check and fire by using:
 
     $ rake rails_async_migrations:check_queue
 
-**For now, there is no rollback mechanism authorized. It means if you rollback the asynchronous migrations will be simply ignored. Handling multiple directions complexifies the build up logic and may not be needed in asynchronous cases.**
+**For now, there is no rollback mechanism authorized. It means if you rollback the asynchronous migrations will be simply ignored. Handling multiple directions renders the build up logic more complex and may not be needed in asynchronous cases.**
 
 ## States
 
@@ -179,6 +182,11 @@ rspec
 ## Author
 
 [Laurent Schaffner](http://www.laurentschaffner.com)
+
+## Contributors
+
+[@SeanLF](https://github.com/SeanLF)
+[@nept](https://github.com/nept)
 
 ## Credits
 
