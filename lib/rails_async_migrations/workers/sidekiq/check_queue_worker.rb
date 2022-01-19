@@ -5,7 +5,7 @@ module RailsAsyncMigrations
       class CheckQueueWorker
         include ::Sidekiq::Worker
 
-        sidekiq_options queue: :default
+        sidekiq_options queue: :default, retry: false
 
         def perform
           Migration::CheckQueue.new.perform
