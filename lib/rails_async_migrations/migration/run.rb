@@ -32,7 +32,7 @@ module RailsAsyncMigrations
       end
 
       def migrator_instance
-        @migrator_instance ||= ::ActiveRecord::Migrator.new(direction.to_sym, [migration])
+        @migrator_instance ||= ::ActiveRecord::Migrator.new(direction.to_sym, [migration], ::ActiveRecord::SchemaMigration)
       end
 
       def schema_migration
