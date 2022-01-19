@@ -33,7 +33,7 @@ module RailsAsyncMigrations
 
       def done?
         if migration.reload.state == 'done'
-          Tracer.new.verbose "Migration #{migration.id} is already `done`, cancelling fire"
+          Tracer.new.verbose "Migration #{migration.version} is already `done`, cancelling fire"
           return true
         end
       end
@@ -44,13 +44,13 @@ module RailsAsyncMigrations
 
       def done!
         migration.update! state: 'done'
-        Tracer.new.verbose "Migration #{migration.id} was correctly processed"
+        Tracer.new.verbose "Migration #{migration.version} was correctly processed"
         migration.reload
       end
 
       def failed_with!(error)
         migration.update! state: 'failed'
-        Tracer.new.verbose "Migration #{migration.id} failed with exception `#{error}`"
+        Tracer.new.verbose "Migration #{migration.version} failed with exception `#{error}`"
       end
     end
   end

@@ -109,6 +109,9 @@ RailsAsyncMigrations.config do |config|
   # which adapter worker you want to use for this library
   # for now you have two options: :delayed_job or :sidekiq
   config.workers = :sidekiq
+
+  # sidekiq queue name to use for async migrations
+  config.sidekiq_queue = :custom_queue
 end
 ```
 
@@ -119,7 +122,6 @@ Each migration which is turned asynchronous follows each other, once one migrati
 If it fails, the error will be raised within the worker so it retries until it eventually works, or until it's considered dead. None of the further asynchronous migrations will be run until you fix the failed one, which is a good protection for data consistency.
 
 ![RailsAsyncMigrations Schema](https://cdn-images-1.medium.com/max/1600/1*VklEFF8IWnmMI6-Cq20nVA.png "RailsAsyncMigrations Schema")
-
 
 You can also manually launch the queue check and fire by using:
 
