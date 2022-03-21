@@ -1,5 +1,12 @@
 # Changelog
 
+## v2.0.4
+
+- format execution time if possible
+- update dependencies
+- lint
+- test against multiple versions of Ruby with Rails 7
+
 ## v2.0.3
 
 - new config option: `disable_async_migrations` to disable async migrations

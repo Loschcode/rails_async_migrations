@@ -1,7 +1,7 @@
 # frozen_string_literal: true
-require 'rails_async_migrations/mutators/base'
-require 'rails_async_migrations/mutators/turn_async'
-require 'rails_async_migrations/mutators/trigger_callback'
+require "rails_async_migrations/mutators/base"
+require "rails_async_migrations/mutators/turn_async"
+require "rails_async_migrations/mutators/trigger_callback"
 
 # this is the entry point of the gem as it adds methods to the current migration class
 # the `self` represents the class being ran so we have to be careful as not to conflict

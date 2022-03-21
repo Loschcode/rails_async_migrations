@@ -27,7 +27,7 @@ module RailsAsyncMigrations
         AsyncSchemaMigration.create!(
           version: active_record.current_version,
           direction: active_record.current_direction,
-          state: 'created'
+          state: "created"
         )
       end
 

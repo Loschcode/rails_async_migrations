@@ -5,25 +5,25 @@ RSpec.describe(RailsAsyncMigrations::Workers) do
   let(:args) { [] }
   let(:async_schema_migration) do
     AsyncSchemaMigration.create!(
-      version: '2110010101010',
-      direction: 'up',
-      state: 'created'
+      version: "2110010101010",
+      direction: "up",
+      state: "created"
     )
   end
 
-  describe '.perform' do
+  describe ".perform" do
     subject { instance.perform(args) }
 
-    context 'through delayed_job' do
+    context "through delayed_job" do
       before do
         config_worker_as :delayed_job
       end
 
-      context 'with :check_queue' do
+      context "with :check_queue" do
         it { is_expected.to(be_truthy) }
       end
 
-      context 'with :fire_migration' do
+      context "with :fire_migration" do
         let(:called_worker) { :fire_migration }
         let(:args) { [async_schema_migration.id] }
 
@@ -31,21 +31,21 @@ RSpec.describe(RailsAsyncMigrations::Workers) do
       end
     end
 
-    context 'through sidekiq' do
+    context "through sidekiq" do
       before { config_worker_as :sidekiq }
 
-      context 'with :check_queue' do
+      context "with :check_queue" do
         let(:called_worker) { :check_queue }
         let(:worker) { RailsAsyncMigrations::Workers::Sidekiq::CheckQueueWorker }
 
-        it 'enqueue CheckQueueWorker' do
+        it "enqueue CheckQueueWorker" do
           expect { subject }.to(change(worker.jobs, :size).by(1))
         end
 
-        context 'when a custom queue is defined' do
+        context "when a custom queue is defined" do
           before { config_queue_as :custom }
 
-          it 'performs the job in the custom queue' do
+          it "performs the job in the custom queue" do
             allow(worker).to(receive(:set).and_call_original)
 
             subject
@@ -55,19 +55,19 @@ RSpec.describe(RailsAsyncMigrations::Workers) do
         end
       end
 
-      context 'with :fire_migration' do
+      context "with :fire_migration" do
         let(:called_worker) { :fire_migration }
         let(:args) { [async_schema_migration.id] }
         let(:worker) { RailsAsyncMigrations::Workers::Sidekiq::FireMigrationWorker }
 
-        it 'enqueue FireMigrationWorker' do
+        it "enqueue FireMigrationWorker" do
           expect { subject }.to(change(worker.jobs, :size).by(1))
         end
 
-        context 'when a custom queue is defined' do
+        context "when a custom queue is defined" do
           before { config_queue_as :custom }
 
-          it 'performs the job in the custom queue' do
+          it "performs the job in the custom queue" do
             allow(worker).to(receive(:set).and_call_original)
 
             subject

@@ -10,12 +10,12 @@ RSpec.describe(RailsAsyncMigrations::Migration::Overwrite) do
     config_worker_as :delayed_job
   end
 
-  context '#perform' do
+  context "#perform" do
     subject { instance.perform }
 
     it { is_expected.to(be_instance_of(Delayed::Backend::ActiveRecord::Job)) }
 
-    context 'with sidekiq' do
+    context "with sidekiq" do
       before { config_worker_as :sidekiq }
 
       it { is_expected.to(be_instance_of(String)) }

@@ -6,21 +6,21 @@ module RailsAsyncMigrations
     end
 
     def processing(text)
-      post(text: text, color: 'warning')
+      post(text: text, color: "warning")
     end
 
     def failed(text)
-      post(text: text, color: 'danger')
+      post(text: text, color: "danger")
     end
 
     def done(text)
-      post(text: text, color: 'good')
+      post(text: text, color: "good")
     end
 
     def verbose(text)
       return unless verbose?
 
-      puts "[VERBOSE] #{[slack_title_message, text].compact.join(' - ')}"
+      puts "[VERBOSE] #{[slack_title_message, text].compact.join(" - ")}"
     end
 
     private

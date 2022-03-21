@@ -48,11 +48,11 @@ module RailsAsyncMigrations
       case workers_type
       when :sidekiq
         unless defined? ::Sidekiq::Worker
-          raise Error, 'Please install Sidekiq before to set it as worker adapter'
+          raise Error, "Please install Sidekiq before to set it as worker adapter"
         end
       when :delayed_job
         unless defined? ::Delayed::Job
-          raise Error, 'Please install Delayed::Job before to set it as worker adapter'
+          raise Error, "Please install Delayed::Job before to set it as worker adapter"
         end
       end
     end

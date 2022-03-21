@@ -10,31 +10,31 @@ RSpec.describe(RailsAsyncMigrations::Connection::ActiveRecord) do
     fake_migrate!
   end
 
-  context '#current_version' do
+  context "#current_version" do
     subject { instance.current_version }
 
-    it { is_expected.to(eq('2110010101010')) }
+    it { is_expected.to(eq("2110010101010")) }
   end
 
-  context '#current_migration' do
+  context "#current_migration" do
     subject { instance.current_migration }
 
     it { is_expected.to(be_instance_of(FakeMigrationProxy)) }
   end
 
-  context '#migration_from(version)' do
-    let(:version) { '2110010101010' }
+  context "#migration_from(version)" do
+    let(:version) { "2110010101010" }
     subject { instance.migration_from(version) }
 
     it { is_expected.to(be_instance_of(FakeMigrationProxy)) }
   end
 
-  context '#allowed_direction?' do
+  context "#allowed_direction?" do
     subject { instance.allowed_direction? }
 
     it { is_expected.to(be_truthy) }
 
-    context 'with a down direction' do
+    context "with a down direction" do
       let(:direction) { :down }
 
       it { is_expected.to(be_falsey) }

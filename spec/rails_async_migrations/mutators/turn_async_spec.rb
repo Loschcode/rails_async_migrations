@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 RSpec.describe(RailsAsyncMigrations::Mutators::TurnAsync) do
   
-  describe '#perform' do
+  describe "#perform" do
     let(:instance) { described_class.new(migration_class) }
     let(:migration_class) { FakeMigration }
 

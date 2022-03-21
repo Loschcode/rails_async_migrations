@@ -9,7 +9,7 @@ RSpec.describe(RailsAsyncMigrations::Mutators::TriggerCallback) do
     fake_version!
   end
 
-  context '#perform' do
+  context "#perform" do
     subject { instance.perform }
     it { is_expected.to(be_truthy) }
   end

@@ -34,7 +34,7 @@ module RailsAsyncMigrations
       end
 
       def done?
-        return unless migration.reload.state == 'done'
+        return unless migration.reload.state == "done"
 
         @notifier.failed("Migration #{markdown_migration} is already `done`, cancelling fire.")
         true
@@ -43,25 +43,32 @@ module RailsAsyncMigrations
       def process!
         @start_time = Time.now
 
-        migration.update!(state: 'processing')
+        migration.update!(state: "processing")
         @notifier.processing("Migration #{markdown_migration} is being processed.")
       end
 
       def done!
-        migration.update!(state: 'done')
+        migration.update!(state: "done")
         migration.reload
         @notifier.done("Migration #{markdown_migration} has been successfully processed in #{execution_time}.")
       end
 
       def failed_with!(error)
-        migration.update!(state: 'failed')
+        migration.update!(state: "failed")
         @notifier.failed("Migration #{markdown_migration} failed with exception `#{error}`.")
       end
 
       def execution_time
         exec_time_in_sec = (migration.updated_at - @start_time).to_i
+        exec_time = "#{exec_time_in_sec}s"
 
-        "#{exec_time_in_sec}s"
+        if defined?(ActionView::Helpers::DateHelper)
+          self.class.include(ActionView::Helpers::DateHelper)
+          str = distance_of_time_in_words(@start_time, migration.updated_at, include_seconds: true)
+          exec_time = "#{str} (#{exec_time})"
+        end
+
+        exec_time
       end
 
       def markdown_migration

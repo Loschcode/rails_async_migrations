@@ -1,17 +1,17 @@
 # frozen_string_literal: true
-require 'bundler/setup'
-require 'debug'
-require 'rails_async_migrations'
+require "bundler/setup"
+require "debug"
+require "rails_async_migrations"
 
-require 'logger'
-require 'database_cleaner'
-require 'delayed_job_active_record'
-require 'rspec-sidekiq'
-require 'shoulda-matchers'
+require "logger"
+require "database_cleaner"
+require "delayed_job_active_record"
+require "rspec-sidekiq"
+require "shoulda-matchers"
 require "fantaskspec"
 
 RSpec.configure do |config|
-  config.example_status_persistence_file_path = '.rspec_status'
+  config.example_status_persistence_file_path = ".rspec_status"
   config.disable_monkey_patching!
   config.infer_rake_task_specs_from_file_location!
 
@@ -20,21 +20,21 @@ RSpec.configure do |config|
   end
 
   ActiveRecord::Base.establish_connection(
-    adapter: 'sqlite3',
-    database: ':memory:'
+    adapter: "sqlite3",
+    database: ":memory:"
   )
   ActiveRecord::Schema.verbose = false
 
   # Add additional requires below this line. Rails is not loaded until this point!
-  Dir['spec/support/**/*.rb', 'lib/tasks/**/*.rake'].each do |file|
+  Dir["spec/support/**/*.rb", "lib/tasks/**/*.rake"].each do |file|
     load file
   end
 
   config.include(UtilsHelpers)
 
-  load 'support/db/schema.rb'
-  load 'support/db/migrate/2110010101010_fake_migration.rb'
-  ActiveRecord::Migrator.migrations_paths << 'support/db/migrate'
+  load "support/db/schema.rb"
+  load "support/db/migrate/2110010101010_fake_migration.rb"
+  ActiveRecord::Migrator.migrations_paths << "support/db/migrate"
 
   DatabaseCleaner.strategy = :truncation
 

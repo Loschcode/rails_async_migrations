@@ -9,7 +9,7 @@ module RailsAsyncMigrations
       end
 
       def perform
-        Notifier.new.verbose('`turn_async` has been triggered')
+        Notifier.new.verbose("`turn_async` has been triggered")
         alter_migration
       end
 
